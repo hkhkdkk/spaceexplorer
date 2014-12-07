@@ -1,11 +1,7 @@
 package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,52 +16,27 @@ public class HowToPlay extends BaseScreen {
 
     private Label title, help1, help2, help3, help4, help5;
     private Table table;
-    private Stage stage;
     private Skin skin;
-    private OrthographicCamera cam;
     private Image background, image1, image2, image3, image4, image5, image6, image7, image8, image9;
-    private boolean back = true;
 
     public HowToPlay(SpaceExplorer s) {
         super(s);
-        cam = new OrthographicCamera(640,480);
 
-        stage = new Stage();
         table = new Table();
         skin = new Skin();
 
         skin.addRegions(Assets.gameAtlas);
         loadUI();
         createUI();
-    }
 
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        cam.update();
-
-        stage.act(delta);
-        stage.draw();
-        inputhandler();
-        if(!back){
-            back = true;
-//            spaceExplorer.setScreen(spaceExplorer.getSettingScreen());
-        }
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setCatchBackKey(true);
         stage.addActor(background);
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
     }
-
+    
     @Override
     public void dispose() {
+    	skin.dispose();
         super.dispose();
-        stage.dispose();
     }
 
     private void loadUI(){
@@ -134,11 +105,5 @@ public class HowToPlay extends BaseScreen {
 
         table.add(image8).left();
         table.add(image9).right();
-    }
-
-    private void inputhandler(){
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            back = false;
-        }
     }
 }

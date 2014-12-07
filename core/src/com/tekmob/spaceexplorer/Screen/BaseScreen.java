@@ -1,12 +1,11 @@
 package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
@@ -29,6 +28,12 @@ public abstract class BaseScreen implements Screen {
     
     @Override
     public void render(float delta) {
+    	if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
+    		if(onBack()) spaceExplorer.getScreenstack().pop();
+    	}
+    	
+    	inputHandler();
+    	
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
@@ -41,26 +46,30 @@ public abstract class BaseScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void hide() {
-
+    	Gdx.input.setInputProcessor(null);
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
     public void dispose() {
     	stage.dispose();
+    }
+    
+    public boolean onBack() {
+    	return true;
+    }
+    
+    public void inputHandler() {
+    	
     }
 }

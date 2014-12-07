@@ -1,10 +1,7 @@
 package com.tekmob.spaceexplorer.Screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -12,8 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
@@ -23,85 +19,63 @@ import com.tekmob.spaceexplorer.SpaceExplorer;
 public class MenuScreen extends BaseScreen {
 
     private Skin skin;
-    private Stage stage;
     private Table table;
     private Button playButton, highscoreButton, encyclopediaButton, settingButton;
     private Label title;
     private Image background;
-    private OrthographicCamera camera;
 
     public MenuScreen(SpaceExplorer s) {
         super(s);
 
-        camera = new OrthographicCamera(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
-
         table = new Table();
-        stage = new Stage(new FitViewport(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT));
 
         skin = new Skin();
         skin.addRegions(Assets.menuAtlas);
 
         loadUI();
         createUI();
-    }
+        setuphandler();
 
-    @Override
-    public void render(float delta) {
-    	super.render(delta);
-    	
-        camera.update();
-
-        stage.act(delta);
-        stage.draw();
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setCatchBackKey(false);
-        Gdx.input.setInputProcessor(stage);
         stage.addActor(background);
         stage.addActor(table);
     }
+    
+    
 
-    @Override
+	@Override
     public void dispose() {
-        super.dispose();
-        stage.dispose();
         skin.dispose();
+        super.dispose();
     }
 
-    private void setuphandler(){
-        playButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-//            	spaceExplorer.getScreenstack().push(new HowToPlay(spaceExplorer));
-            	System.out.println("1");
-            }
-        });
+    private void setuphandler() {
+    	playButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+            	spaceExplorer.getScreenstack().push(new GameScreen(spaceExplorer));
+			}
+    	});
+    	
+    	settingButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+            	spaceExplorer.getScreenstack().push(new SettingScreen(spaceExplorer));
+			}
+    	});
 
-        settingButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-//            	spaceExplorer.getScreenstack().push(new SettingScreen(spaceExplorer));
-            	System.out.println("2");
-            }
-        });
+        highscoreButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+            	spaceExplorer.getScreenstack().push(new HighscoreScreen(spaceExplorer));
+			}
+    	});
 
-        highscoreButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-//            	spaceExplorer.getScreenstack().push(new HighscoreScreen(spaceExplorer));
-            	System.out.println("3");
-            }
-        });
-
-        encyclopediaButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-//            	spaceExplorer.getScreensack().push(new EncyclopediaScreen(spaceExplorer));
-            	System.out.println("4");
-            }
-        });
+        encyclopediaButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+            	spaceExplorer.getScreenstack().push(new EncyclopediaScreen(spaceExplorer));
+			}
+    	});
     }
 
     private void loadUI(){
@@ -131,9 +105,8 @@ public class MenuScreen extends BaseScreen {
         encyclopediaButton = new ImageButton(e);
 
         background = new Image(Assets.background);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
         
-        setuphandler();
     }
 
     private void createUI(){
