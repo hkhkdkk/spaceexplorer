@@ -14,17 +14,17 @@ import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
 /**
- * Created by Rahmat Rasyidi Hakim on 11/23/2014.
+ * Created by Rahmat Rasyidi Hakim on 12/8/2014.
  */
-public class EncyclopediaScreen extends BaseScreen {
+public class StatScreen extends BaseScreen {
+
     private Table table;
-    private Button planet, moon, other;
     private Label title;
     private Image backgorund;
     private Image back;
     private Skin skin;
 
-    public EncyclopediaScreen(SpaceExplorer s){
+    public StatScreen(SpaceExplorer s){
         super(s);
         table = new Table();
         skin = new Skin();
@@ -45,44 +45,13 @@ public class EncyclopediaScreen extends BaseScreen {
                 spaceExplorer.getScreenstack().pop();
             }
         });
-
-        planet.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-              //  spaceExplorer.getScreenstack().push(new HelpScreen(spaceExplorer));
-            }
-        });
-
-        moon.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            //    spaceExplorer.getScreenstack().push(new SoundScreen(spaceExplorer));
-            }
-        });
-
-        other.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            //    spaceExplorer.getScreenstack().push(new CreditScreen(spaceExplorer));
-            }
-        });
     }
 
     private void loadUI(){
         Label.LabelStyle l = new Label.LabelStyle();
         l.font = Assets.nasa;
         l.fontColor = Color.WHITE;
-        title = new Label("ENCYCLOPEDIA", l);
-
-        ImageTextButton.ImageTextButtonStyle h = new ImageTextButton.ImageTextButtonStyle();
-        h.font = Assets.space;
-        h.fontColor = Color.WHITE;
-        h.up = skin.getDrawable("button");
-        h.down = skin.getDrawable("button");
-
-        planet = new ImageTextButton("PLANETS", h);
-        moon = new ImageTextButton("MOONS", h);
-        other = new ImageTextButton("OTHERS", h);
+        title = new Label("STATS", l);
 
         back = new Image(Assets.arrow);
 
@@ -94,9 +63,6 @@ public class EncyclopediaScreen extends BaseScreen {
         table.setFillParent(true);
         table.top();
         table.add(title).padBottom(50).padTop(20).expandX().row();
-        table.add(planet).size(800,100).padBottom(20).row();
-        table.add(moon).size(800,100).padBottom(20).row();
-        table.add(other).size(800,100).padBottom(40).colspan(3).row();
         table.add(back).left();
     }
 }

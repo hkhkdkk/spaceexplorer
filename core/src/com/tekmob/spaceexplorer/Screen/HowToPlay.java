@@ -2,10 +2,12 @@ package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
@@ -28,6 +30,7 @@ public class HowToPlay extends BaseScreen {
         skin.addRegions(Assets.gameAtlas);
         loadUI();
         createUI();
+        setupHandler();
 
         stage.addActor(background);
         stage.addActor(table);
@@ -62,9 +65,7 @@ public class HowToPlay extends BaseScreen {
         image6 = new Image(skin.getRegion("shield"));
         image7 = new Image(skin.getRegion("missile"));
         image8 = new Image(Assets.arrow);
-        image9 = new Image(Assets.arrow);
-
-        image9.setRotation(180);
+        image9 = new Image(Assets.arrowflip);
 
         background = new Image(Assets.background);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -74,12 +75,10 @@ public class HowToPlay extends BaseScreen {
         Table table1 = new Table();
         Table table2 = new Table();
 
-        table.debug();
-
         table.setFillParent(true);
         table.top();
 
-        table.add(title).colspan(3).padTop(20).padBottom(50).center().row();
+        table.add(title).colspan(3).padTop(20).padBottom(50).expandX().center().row();
         table.add(image1);
         table.add(image2);
         table.add(image3);
@@ -105,5 +104,21 @@ public class HowToPlay extends BaseScreen {
 
         table.add(image8).left();
         table.add(image9).right();
+    }
+
+    private void setupHandler(){
+        image8.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().pop();
+            }
+        });
+
+        image9.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().changeScreen(new GameScreen(spaceExplorer));
+            }
+        });
     }
 }

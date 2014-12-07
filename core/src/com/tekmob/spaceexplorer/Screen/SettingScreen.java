@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -21,10 +23,14 @@ public class SettingScreen extends BaseScreen {
     private Button how, sound, credit;
     private Label title;
     private Image backgorund;
+    private Image back;
+    private Skin skin;
 
     public SettingScreen(SpaceExplorer s){
         super(s);
         table = new Table();
+        skin = new Skin();
+        skin.addRegions(Assets.gameAtlas);
 
         loadUI();
         createUI();
@@ -35,27 +41,31 @@ public class SettingScreen extends BaseScreen {
     }
 
     private void setupHandler(){
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().pop();
+            }
+        });
+
         how.addListener(new ClickListener() {
-        	
             @Override
 			public void clicked(InputEvent event, float x, float y) {
-//              spaceExplorer.setScreen(spaceExplorer.getHelpScreen());
+              spaceExplorer.getScreenstack().push(new HelpScreen(spaceExplorer));
 			}
         });
 
         sound.addListener(new ClickListener() {
-        	
             @Override
 			public void clicked(InputEvent event, float x, float y) {
-//              spaceExplorer.setScreen(spaceExplorer.getHelpScreen());
+              spaceExplorer.getScreenstack().push(new SoundScreen(spaceExplorer));
 			}
         });
 
         credit.addListener(new ClickListener() {
-        	
             @Override
 			public void clicked(InputEvent event, float x, float y) {
-//              spaceExplorer.setScreen(spaceExplorer.getHelpScreen());
+                spaceExplorer.getScreenstack().push(new CreditScreen(spaceExplorer));
 			}
         });
     }
@@ -66,26 +76,29 @@ public class SettingScreen extends BaseScreen {
         l.fontColor = Color.WHITE;
         title = new Label("SETTING", l);
 
-        TextButton.TextButtonStyle h = new TextButton.TextButtonStyle();
+        ImageTextButton.ImageTextButtonStyle h = new ImageTextButton.ImageTextButtonStyle();
         h.font = Assets.space;
         h.fontColor = Color.WHITE;
+        h.up = skin.getDrawable("button");
+        h.down = skin.getDrawable("button");
 
-        how = new TextButton("HOW TO PLAY", h);
-        sound = new TextButton("SOUND", h);
-        credit = new TextButton("CREDITS", h);
+        how = new ImageTextButton("HOW TO PLAY", h);
+        sound = new ImageTextButton("SOUND", h);
+        credit = new ImageTextButton("CREDITS", h);
+
+        back = new Image(Assets.arrow);
 
         backgorund = new Image(Assets.background);
         backgorund.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     private void createUI(){
-        table.debug();
         table.setFillParent(true);
         table.top();
-        table.add(title).padBottom(50).padTop(20).row();
-        table.add(how).padBottom(20).padRight(50).padLeft(50).expand().row();
-        table.add(sound).padBottom(20).expand().row();
-        table.add(credit).padBottom(40).expand().row();
-        table.pack();
+        table.add(title).padBottom(50).padTop(20).expandX().row();
+        table.add(how).size(800,100).padBottom(20).row();
+        table.add(sound).size(800,100).padBottom(20).row();
+        table.add(credit).size(800,100).padBottom(40).row();
+        table.add(back).left();
     }
 }

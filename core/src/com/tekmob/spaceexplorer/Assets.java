@@ -19,6 +19,7 @@ public class Assets {
     public static Texture background;
     public static Texture gameBack;
     public static Texture arrow;
+    public static Texture arrowflip;
     public static Texture PLAYER;
     public static Texture OBSTACLE;
     public static Texture MISSILE;
@@ -36,15 +37,16 @@ public class Assets {
         background = loadTexture("ui/background.jpg");
         gameBack = loadTexture("ui/bg_game.png");
         arrow = loadTexture("ui/arrow.png");
-        
+        arrowflip = loadTexture("ui/arrowflip.png");
+
         // fonts
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 70;
         nasa = generator.generateFont(parameter);
         generator.dispose();
         
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
         parameter.size = 60;
         space = generator.generateFont(parameter);
         parameter.size = 35;

@@ -66,7 +66,7 @@ public class MenuScreen extends BaseScreen {
         highscoreButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-            	spaceExplorer.getScreenstack().push(new HighscoreScreen(spaceExplorer));
+            	spaceExplorer.getScreenstack().push(new StatScreen(spaceExplorer));
 			}
     	});
 
