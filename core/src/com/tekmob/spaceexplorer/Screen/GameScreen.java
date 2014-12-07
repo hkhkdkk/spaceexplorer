@@ -34,7 +34,7 @@ public class GameScreen extends BaseScreen {
 
     private void inputHandler(){
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
+//            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
         }
     }
 }

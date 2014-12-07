@@ -50,7 +50,7 @@ public class HowToPlay extends BaseScreen {
         inputhandler();
         if(!back){
             back = true;
-            spaceExplorer.setScreen(spaceExplorer.getSettingScreen());
+//            spaceExplorer.setScreen(spaceExplorer.getSettingScreen());
         }
     }
 

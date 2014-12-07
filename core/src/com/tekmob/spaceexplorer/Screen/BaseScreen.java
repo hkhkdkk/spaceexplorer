@@ -2,35 +2,41 @@ package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
 /**
  * Created by Rahmat Rasyidi Hakim on 11/20/2014.
  */
-public class BaseScreen implements Screen {
+public abstract class BaseScreen implements Screen {
 
     protected SpaceExplorer spaceExplorer;
-    protected final Color bgColor;
-    private FPSLogger fpsLogger;
-
-    public BaseScreen(SpaceExplorer s){
-        spaceExplorer = s;
-        bgColor = new Color(0, 0, 0, 0);
-        fpsLogger = new FPSLogger();
+    protected Stage stage;
+    
+    public BaseScreen(SpaceExplorer s) {
+    	this(s, new FitViewport(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT));
     }
+
+    public BaseScreen(SpaceExplorer s, Viewport vp){
+        spaceExplorer = s;
+        stage = new Stage(vp);
+    }
+    
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        fpsLogger.log();
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+    	stage.getViewport().update(width, height);
     }
 
     @Override
@@ -55,6 +61,6 @@ public class BaseScreen implements Screen {
 
     @Override
     public void dispose() {
-
+    	stage.dispose();
     }
 }

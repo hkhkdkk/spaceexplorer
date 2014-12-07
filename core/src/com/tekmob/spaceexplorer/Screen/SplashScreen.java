@@ -1,16 +1,12 @@
 package com.tekmob.spaceexplorer.Screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.tekmob.spaceexplorer.Assets;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
 /**
@@ -20,13 +16,10 @@ public class SplashScreen extends BaseScreen {
 
     private Texture texture;
     private Image splashImage;
-    private Stage stage;
     private boolean animationDone = false;
 
     public SplashScreen(SpaceExplorer s){
-        super(s);
-
-        stage = new Stage();
+        super(s, new ScreenViewport());
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
         splashImage = new Image(texture);
     }
@@ -38,21 +31,24 @@ public class SplashScreen extends BaseScreen {
         stage.draw();
 
         if(animationDone){
-            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
+            spaceExplorer.getScreenstack().changeScreen(new MenuScreen(spaceExplorer));
         }
     }
 
     @Override
     public void show() {
+//        float w = SpaceExplorer.WIDTH;
+//        float h = SpaceExplorer.HEIGHT;
+
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
         splashImage.setSize(w,h);
         stage.addActor(splashImage);
-        splashImage.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(0.75f),Actions.delay(1.5f),Actions.run(new Runnable() {
+        splashImage.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(0.75f),Actions.delay(10.5f),Actions.run(new Runnable() {
             @Override
             public void run() {
-                animationDone = true;
+//                animationDone = true;
             }
         })));
     }
@@ -60,5 +56,8 @@ public class SplashScreen extends BaseScreen {
     @Override
     public void dispose() {
         super.dispose();
+        texture.dispose();
     }
+
+    
 }

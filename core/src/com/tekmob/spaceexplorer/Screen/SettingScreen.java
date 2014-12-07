@@ -57,7 +57,7 @@ public class SettingScreen extends BaseScreen {
         inputHandler();
         if(!back){
             back = true;
-            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
+//            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
         }
     }
 
@@ -82,7 +82,7 @@ public class SettingScreen extends BaseScreen {
         how.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                spaceExplorer.setScreen(spaceExplorer.getHelpScreen());
+//                spaceExplorer.setScreen(spaceExplorer.getHelpScreen());
             }
         });
 

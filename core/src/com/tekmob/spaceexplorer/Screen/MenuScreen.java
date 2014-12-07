@@ -1,9 +1,7 @@
 package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
@@ -34,10 +33,10 @@ public class MenuScreen extends BaseScreen {
     public MenuScreen(SpaceExplorer s) {
         super(s);
 
-        camera = new OrthographicCamera(640,480);
+        camera = new OrthographicCamera(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
 
         table = new Table();
-        stage = new Stage();
+        stage = new Stage(new FitViewport(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT));
 
         skin = new Skin();
         skin.addRegions(Assets.menuAtlas);
@@ -48,20 +47,18 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    	super.render(delta);
+    	
         camera.update();
 
-        Gdx.input.setInputProcessor(stage);
         stage.act(delta);
         stage.draw();
-        inputhandler();
     }
 
     @Override
     public void show() {
-
         Gdx.input.setCatchBackKey(false);
+        Gdx.input.setInputProcessor(stage);
         stage.addActor(background);
         stage.addActor(table);
     }
@@ -73,32 +70,36 @@ public class MenuScreen extends BaseScreen {
         skin.dispose();
     }
 
-    private void inputhandler(){
+    private void setuphandler(){
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                spaceExplorer.setScreen(spaceExplorer.getHowToPlay());
+//            	spaceExplorer.getScreenstack().push(new HowToPlay(spaceExplorer));
+            	System.out.println("1");
             }
         });
 
         settingButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                spaceExplorer.setScreen(spaceExplorer.getSettingScreen());
+//            	spaceExplorer.getScreenstack().push(new SettingScreen(spaceExplorer));
+            	System.out.println("2");
             }
         });
 
         highscoreButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                spaceExplorer.setScreen(spaceExplorer.getHighscoreScreen());
+//            	spaceExplorer.getScreenstack().push(new HighscoreScreen(spaceExplorer));
+            	System.out.println("3");
             }
         });
 
         encyclopediaButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                spaceExplorer.setScreen(spaceExplorer.getEncyclopediaScreen());
+//            	spaceExplorer.getScreensack().push(new EncyclopediaScreen(spaceExplorer));
+            	System.out.println("4");
             }
         });
     }
@@ -131,10 +132,12 @@ public class MenuScreen extends BaseScreen {
 
         background = new Image(Assets.background);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        
+        setuphandler();
     }
 
     private void createUI(){
-         table.setFillParent(true);
+        table.setFillParent(true);
         table.top();
         table.add(title).colspan(3).center().padTop(20).padBottom(50).row();
         table.add(playButton).colspan(3).center().size(180).expand().row();
