@@ -92,6 +92,7 @@ public class HowToPlay extends BaseScreen {
         image7 = new Image(skin.getRegion("missile"));
         image8 = new Image(Assets.arrow);
         image9 = new Image(Assets.arrow);
+
         image9.setRotation(180);
 
         background = new Image(Assets.background);
@@ -101,6 +102,8 @@ public class HowToPlay extends BaseScreen {
     private void createUI(){
         Table table1 = new Table();
         Table table2 = new Table();
+
+        table.debug();
 
         table.setFillParent(true);
         table.top();
@@ -120,8 +123,8 @@ public class HowToPlay extends BaseScreen {
         table1.add(image5);
         table.add(table1).center();
 
-        table2.add(image6).padLeft(10);
-        table2.add(image7);
+        table2.add(image6);
+        table2.add(image7).padLeft(10);
         table.add(table2).center();
         table.row().padTop(20);
 

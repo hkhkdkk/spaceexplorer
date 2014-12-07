@@ -34,8 +34,8 @@ public class MenuScreen extends BaseScreen {
     public MenuScreen(SpaceExplorer s) {
         super(s);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
+        camera = new OrthographicCamera(640,480);
+
         table = new Table();
         stage = new Stage();
 
@@ -77,7 +77,7 @@ public class MenuScreen extends BaseScreen {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                spaceExplorer.setScreen(spaceExplorer.getGameScreen());
+                spaceExplorer.setScreen(spaceExplorer.getHowToPlay());
             }
         });
 
