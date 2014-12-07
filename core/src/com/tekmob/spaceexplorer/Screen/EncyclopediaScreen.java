@@ -25,7 +25,7 @@ public class EncyclopediaScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        inputHandler();
+
     }
 
     @Override
@@ -38,10 +38,10 @@ public class EncyclopediaScreen extends BaseScreen {
         super.dispose();
     }
 
-    private void inputHandler(){
+    /*private void inputHandler(){
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
             spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
         }
-    }
+    }*/
 
 }

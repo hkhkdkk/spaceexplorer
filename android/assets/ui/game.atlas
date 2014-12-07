@@ -1,0 +1,166 @@
+
+game.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button
+  rotate: false
+  xy: 1, 337
+  size: 921, 159
+  orig: 921, 159
+  offset: 0, 0
+  index: -1
+tilt
+  rotate: false
+  xy: 1, 217
+  size: 200, 118
+  orig: 200, 118
+  offset: 0, 0
+  index: -1
+shield3
+  rotate: false
+  xy: 1, 78
+  size: 144, 137
+  orig: 144, 137
+  offset: 0, 0
+  index: -1
+shield2
+  rotate: false
+  xy: 203, 216
+  size: 143, 119
+  orig: 143, 119
+  offset: 0, 0
+  index: -1
+shield1
+  rotate: false
+  xy: 348, 227
+  size: 133, 108
+  orig: 133, 108
+  offset: 0, 0
+  index: -1
+meteorGrey_big2
+  rotate: false
+  xy: 483, 237
+  size: 120, 98
+  orig: 120, 98
+  offset: 0, 0
+  index: -1
+missile
+  rotate: false
+  xy: 605, 235
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+pumissile
+  rotate: false
+  xy: 707, 235
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+pushield
+  rotate: false
+  xy: 809, 235
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+meteorGrey_big4
+  rotate: false
+  xy: 924, 400
+  size: 98, 96
+  orig: 98, 96
+  offset: 0, 0
+  index: -1
+ship
+  rotate: false
+  xy: 1, 1
+  size: 112, 75
+  orig: 112, 75
+  offset: 0, 0
+  index: -1
+meteorGrey_big3
+  rotate: false
+  xy: 924, 316
+  size: 89, 82
+  orig: 89, 82
+  offset: 0, 0
+  index: -1
+meteorGrey_big1
+  rotate: false
+  xy: 911, 230
+  size: 101, 84
+  orig: 101, 84
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 147, 114
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+laserRed01
+  rotate: false
+  xy: 1014, 260
+  size: 9, 54
+  orig: 9, 54
+  offset: 0, 0
+  index: -1
+pumissile1
+  rotate: false
+  xy: 249, 164
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+pushield1
+  rotate: false
+  xy: 249, 112
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+meteorGrey_med1
+  rotate: false
+  xy: 301, 171
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
+meteorGrey_med2
+  rotate: false
+  xy: 301, 129
+  size: 45, 40
+  orig: 45, 40
+  offset: 0, 0
+  index: -1
+meteorGrey_small1
+  rotate: false
+  xy: 115, 48
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+meteorGrey_small2
+  rotate: false
+  xy: 147, 86
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+meteorGrey_tiny1
+  rotate: false
+  xy: 115, 28
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+meteorGrey_tiny2
+  rotate: false
+  xy: 301, 112
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1

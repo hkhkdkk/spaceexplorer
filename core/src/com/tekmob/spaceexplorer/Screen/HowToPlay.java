@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,19 +14,19 @@ import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
 /**
- * Created by Rahmat Rasyidi Hakim on 12/1/2014.
+ * Created by Rahmat Rasyidi Hakim on 12/7/2014.
  */
-public class HelpScreen extends BaseScreen {
+public class HowToPlay extends BaseScreen {
 
     private Label title, help1, help2, help3, help4, help5;
     private Table table;
     private Stage stage;
     private Skin skin;
     private OrthographicCamera cam;
-    private Image background, image1, image2, image3, image4, image5, image6, image7, image8;
+    private Image background, image1, image2, image3, image4, image5, image6, image7, image8, image9;
     private boolean back = true;
 
-    public HelpScreen(SpaceExplorer s) {
+    public HowToPlay(SpaceExplorer s) {
         super(s);
         cam = new OrthographicCamera(640,480);
 
@@ -92,6 +91,8 @@ public class HelpScreen extends BaseScreen {
         image6 = new Image(skin.getRegion("shield"));
         image7 = new Image(skin.getRegion("missile"));
         image8 = new Image(Assets.arrow);
+        image9 = new Image(Assets.arrow);
+        image9.setRotation(180);
 
         background = new Image(Assets.background);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -119,8 +120,8 @@ public class HelpScreen extends BaseScreen {
         table1.add(image5);
         table.add(table1).center();
 
-        table2.add(image6);
-        table2.add(image7).padLeft(10);
+        table2.add(image6).padLeft(10);
+        table2.add(image7);
         table.add(table2).center();
         table.row().padTop(20);
 
@@ -129,6 +130,7 @@ public class HelpScreen extends BaseScreen {
         table.row().padTop(40);
 
         table.add(image8).left();
+        table.add(image9).right();
     }
 
     private void inputhandler(){

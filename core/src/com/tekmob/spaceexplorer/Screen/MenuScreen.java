@@ -29,18 +29,15 @@ public class MenuScreen extends BaseScreen {
     private Button playButton, highscoreButton, encyclopediaButton, settingButton;
     private Label title;
     private Image background;
-    private OrthographicCamera cam;
+    private OrthographicCamera camera;
 
     public MenuScreen(SpaceExplorer s) {
         super(s);
 
-        Gdx.input.setCatchBackKey(true);
-        cam = new OrthographicCamera(640,480);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
         table = new Table();
         stage = new Stage();
-
-
-        //Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         skin = new Skin();
         skin.addRegions(Assets.menuAtlas);
@@ -53,7 +50,7 @@ public class MenuScreen extends BaseScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        cam.update();
+        camera.update();
 
         Gdx.input.setInputProcessor(stage);
         stage.act(delta);
@@ -63,6 +60,8 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void show() {
+
+        Gdx.input.setCatchBackKey(false);
         stage.addActor(background);
         stage.addActor(table);
     }
@@ -75,9 +74,6 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void inputhandler(){
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-
-        }
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

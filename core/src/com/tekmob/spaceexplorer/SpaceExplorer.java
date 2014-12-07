@@ -1,22 +1,15 @@
 package com.tekmob.spaceexplorer;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tekmob.spaceexplorer.Screen.EncyclopediaScreen;
 import com.tekmob.spaceexplorer.Screen.GameScreen;
 import com.tekmob.spaceexplorer.Screen.HelpScreen;
 import com.tekmob.spaceexplorer.Screen.HighscoreScreen;
-import com.tekmob.spaceexplorer.Screen.LoadingScreen;
+import com.tekmob.spaceexplorer.Screen.HowToPlay;
 import com.tekmob.spaceexplorer.Screen.MenuScreen;
 import com.tekmob.spaceexplorer.Screen.SettingScreen;
 import com.tekmob.spaceexplorer.Screen.SplashScreen;
-
-import sun.rmi.runtime.Log;
 
 public class SpaceExplorer extends Game {
 
@@ -27,7 +20,9 @@ public class SpaceExplorer extends Game {
     private HighscoreScreen highscoreScreen;
     private EncyclopediaScreen encyclopediaScreen;
     private HelpScreen helpScreen;
+    private HowToPlay howToPlay;
 
+    public static int WIDTH = 800, HEIGHT = 480;
 
     public SpaceExplorer(){}
 
@@ -42,6 +37,7 @@ public class SpaceExplorer extends Game {
         highscoreScreen = new HighscoreScreen(this);
         encyclopediaScreen = new EncyclopediaScreen(this);
         helpScreen = new HelpScreen(this);
+        howToPlay = new HowToPlay(this);
 
         setScreen(getSplashScreen());
     }
@@ -87,6 +83,10 @@ public class SpaceExplorer extends Game {
 
     public HelpScreen getHelpScreen(){
         return helpScreen;
+    }
+
+    public HowToPlay getHowToPlay(){
+        return howToPlay;
     }
 
     public void restartGame(){

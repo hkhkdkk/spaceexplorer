@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -33,6 +34,7 @@ public class SettingScreen extends BaseScreen {
     private Button how, sound, credit;
     private Label title;
     private Image backgorund;
+    private boolean back = true;
 
     public SettingScreen(SpaceExplorer s){
         super(s);
@@ -40,7 +42,7 @@ public class SettingScreen extends BaseScreen {
         skin = new Skin();
         table = new Table();
 
-        Gdx.input.setCatchBackKey(true);
+
         loadUI();
         createUI();
     }
@@ -50,14 +52,19 @@ public class SettingScreen extends BaseScreen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Gdx.input.setInputProcessor(stage);
         stage.act(delta);
         stage.draw();
         inputHandler();
+        if(!back){
+            back = true;
+            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
+        }
     }
 
     @Override
     public void show() {
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setInputProcessor(stage);
         stage.addActor(backgorund);
         stage.addActor(table);
     }
@@ -69,7 +76,7 @@ public class SettingScreen extends BaseScreen {
 
     private void inputHandler(){
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
+            back = false;
         }
 
         how.addListener(new ChangeListener() {

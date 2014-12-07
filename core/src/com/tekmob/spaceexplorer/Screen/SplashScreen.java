@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -51,7 +52,6 @@ public class SplashScreen extends BaseScreen {
         splashImage.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(0.75f),Actions.delay(1.5f),Actions.run(new Runnable() {
             @Override
             public void run() {
-
                 animationDone = true;
             }
         })));

@@ -45,8 +45,8 @@ public class HighscoreScreen extends BaseScreen {
     }
 
     private void inputHandler(){
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+       /* if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
             spaceExplorer.setScreen(spaceExplorer.getMenuScreen());
-        }
+        }*/
     }
 }
