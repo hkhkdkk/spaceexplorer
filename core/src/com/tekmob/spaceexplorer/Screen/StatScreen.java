@@ -3,9 +3,7 @@ package com.tekmob.spaceexplorer.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -23,6 +21,7 @@ public class StatScreen extends BaseScreen {
     private Image backgorund;
     private Image back;
     private Skin skin;
+    private Label highscore, maxMissile, maxShield, maxMilestone;
 
     public StatScreen(SpaceExplorer s){
         super(s);

@@ -103,6 +103,7 @@ public class HowToPlay extends BaseScreen {
         table.row().padTop(40);
 
         table.add(image8).left();
+        table.add();
         table.add(image9).right();
     }
 

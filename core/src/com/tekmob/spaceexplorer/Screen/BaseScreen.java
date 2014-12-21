@@ -28,10 +28,7 @@ public abstract class BaseScreen implements Screen {
     
     @Override
     public void render(float delta) {
-    	if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
-    		if(onBack()) spaceExplorer.getScreenstack().pop();
-    	}
-    	
+        onBackScreen();
     	inputHandler();
     	
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,5 +68,11 @@ public abstract class BaseScreen implements Screen {
     
     public void inputHandler() {
     	
+    }
+
+    public void onBackScreen() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
+            if(onBack()) spaceExplorer.getScreenstack().pop();
+        }
     }
 }

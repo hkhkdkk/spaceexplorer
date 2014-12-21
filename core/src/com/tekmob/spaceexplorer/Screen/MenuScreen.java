@@ -52,8 +52,8 @@ public class MenuScreen extends BaseScreen {
     	playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-            	spaceExplorer.getScreenstack().push(new GameScreen(spaceExplorer));
-			}
+                spaceExplorer.getScreenstack().push(new GameScreen(spaceExplorer));
+            }
     	});
     	
     	settingButton.addListener(new ClickListener() {
@@ -61,21 +61,21 @@ public class MenuScreen extends BaseScreen {
 			public void clicked(InputEvent event, float x, float y) {
             	spaceExplorer.getScreenstack().push(new SettingScreen(spaceExplorer));
 			}
-    	});
+        });
 
         highscoreButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
             	spaceExplorer.getScreenstack().push(new StatScreen(spaceExplorer));
 			}
-    	});
+       	});
 
         encyclopediaButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
             	spaceExplorer.getScreenstack().push(new EncyclopediaScreen(spaceExplorer));
 			}
-    	});
+       	});
     }
 
     private void loadUI(){

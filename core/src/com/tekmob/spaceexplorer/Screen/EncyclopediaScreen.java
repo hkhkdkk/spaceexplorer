@@ -49,7 +49,7 @@ public class EncyclopediaScreen extends BaseScreen {
         planet.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-              //  spaceExplorer.getScreenstack().push(new HelpScreen(spaceExplorer));
+                spaceExplorer.getScreenstack().push(new PlanetScreen(spaceExplorer));
             }
         });
 

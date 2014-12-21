@@ -8,13 +8,18 @@ import com.badlogic.gdx.Preferences;
  */
 public class GamePreferences {
 
-    private static final String PREFS_NAME = "myPref";
+    private static final String PREFS_NAME = "myPrefs";
     private static final String PREF_VOLUME = "volume";
     private static final String PREF_MUSIC_ENABLED = "music.enabled";
     private static final String PREF_SOUND_ENABLED = "sound.enabled";
     private static final String PREF_HOWTOPLAY_ENABLED = "how.enabled";
 
-    public GamePreferences(){}
+    public GamePreferences(){
+    }
+
+    public void loadSetting(){
+        isHowToPlayEnabled();
+    }
 
     protected Preferences getPrefs(){
         return Gdx.app.getPreferences(PREFS_NAME);

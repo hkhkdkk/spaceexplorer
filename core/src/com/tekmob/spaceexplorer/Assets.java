@@ -1,6 +1,8 @@
 package com.tekmob.spaceexplorer;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,6 +27,13 @@ public class Assets {
     public static Texture MISSILE;
     public static Texture SHIELDPU;
     public static Texture MISSILEPU;
+    public static Texture dummy;
+
+    public static Sound hitSound;
+    public static Sound hitpuSound;
+    public static Sound laserSound;
+    public static Music menuMusic;
+    public static Music gameMusic;
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -38,6 +47,7 @@ public class Assets {
         gameBack = loadTexture("ui/bg_game.png");
         arrow = loadTexture("ui/arrow.png");
         arrowflip = loadTexture("ui/arrowflip.png");
+        dummy = loadTexture("badlogic.jpg");
 
         // fonts
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
@@ -62,6 +72,13 @@ public class Assets {
         MISSILE = gameAtlas.findRegion("missile").getTexture();
         MISSILEPU = gameAtlas.findRegion("pushield1").getTexture();
         SHIELDPU = gameAtlas.createSprite("pumissile1").getTexture();
+
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("sound/explode.wav"));
+        hitpuSound = Gdx.audio.newSound(Gdx.files.internal("sound/pu.wav"));
+        laserSound = Gdx.audio.newSound(Gdx.files.internal("sound/laser.wav"));
+
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/game.mp3"));
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/menu.mp3"));
     }
 
     public static void dispose() {
@@ -81,6 +98,13 @@ public class Assets {
         MISSILE.dispose();
         SHIELDPU.dispose();
         MISSILEPU.dispose();  	
+
+        // sound
+        hitSound.dispose();
+        hitpuSound.dispose();
+        laserSound.dispose();
+        gameMusic.dispose();
+        menuMusic.dispose();
 
         menuAtlas.dispose();
         gameAtlas.dispose();
