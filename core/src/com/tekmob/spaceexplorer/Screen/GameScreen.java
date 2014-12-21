@@ -2,6 +2,7 @@ package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.sun.jmx.snmp.SnmpUnknownMsgProcModelException;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
@@ -48,7 +50,6 @@ public class GameScreen extends BaseScreen {
     private float adjustedY;
 
     GameState gameState = GameState.Running;
-
 
     public GameScreen(SpaceExplorer s){
         super(s);
@@ -106,6 +107,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+
 
         drawWorld();
         updateWorld();
@@ -240,10 +242,6 @@ public class GameScreen extends BaseScreen {
         if (plane.x > spaceExplorer.WIDTH - plane.getWidth()) plane.x = spaceExplorer.WIDTH - plane.getWidth();
         if (plane.y < 0) plane.y = 0;
         if (plane.y > spaceExplorer.HEIGHT - plane.getHeight()) plane.y = spaceExplorer.HEIGHT - plane.getHeight();
-
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            spaceExplorer.getScreenstack().pop();
-        }
     }
 
     private void spawnObstacle(){
@@ -282,16 +280,11 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override
-    public void hide() {
-        dispose();
-    }
-
-    @Override
     public void dispose() {
+        super.dispose();
         skin.dispose();
         batch.dispose();
         Assets.dispose();
-        super.dispose();
     }
 
     static enum GameState {
