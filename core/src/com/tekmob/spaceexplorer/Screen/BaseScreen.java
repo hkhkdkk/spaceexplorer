@@ -28,12 +28,11 @@ public abstract class BaseScreen implements Screen {
     
     @Override
     public void render(float delta) {
-        onBackScreen();
-    	inputHandler();
-    	
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+        onBackScreen();
+        inputHandler();
     }
 
     @Override
