@@ -73,13 +73,13 @@ public class GameScreen extends BaseScreen {
         imgShield = skin.getRegion("shield1");
 
         background = new Image(Assets.gameBack);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.addActor(background);
+        background.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
 
         obstacle = new Array<Rectangle>();
         missile = new Array<Rectangle>();
         shield = new Array<Rectangle>();
 
+        stage.addActor(background);
         resetWorld();
         spawnObstacle();
     }

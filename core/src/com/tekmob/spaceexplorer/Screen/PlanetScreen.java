@@ -112,7 +112,7 @@ public class PlanetScreen extends BaseScreen {
         back = new Image(Assets.arrow);
 
         backgorund = new Image(Assets.background);
-        backgorund.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        backgorund.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
     }
 
     private void createUI(){

@@ -67,7 +67,7 @@ public class HelpScreen extends BaseScreen {
         image8 = new Image(Assets.arrow);
 
         background = new Image(Assets.background);
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
     }
 
     private void createUI(){
