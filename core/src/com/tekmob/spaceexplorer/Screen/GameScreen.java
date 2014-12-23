@@ -308,17 +308,17 @@ public class GameScreen extends BaseScreen {
         batch.end();
 
         batch.begin();
-            Assets.spaceHow.draw(batch, miles + " AU", 20, spaceExplorer.HEIGHT - 10);
-            Assets.spaceHow.draw(batch, score + "", spaceExplorer.WIDTH-200, spaceExplorer.HEIGHT-10);
+            Assets.nasaGame.draw(batch, miles + " AU", 20, spaceExplorer.HEIGHT - 10);
+            Assets.nasaGame.draw(batch, "score: "+score, spaceExplorer.WIDTH-230, spaceExplorer.HEIGHT-10);
             batch.draw(imgPlane, ship.position.x, ship.position.y);
             if(activedShield)
             batch.draw(imgShield, ship.position.x - 10, ship.position.y);
             buttonShield.draw(batch,1f);
             buttonMissile.draw(batch,1f);
-            Assets.spaceHow.draw(batch, countShield + "", 140, 50);
-            Assets.spaceHow.draw(batch, countMissile + "", spaceExplorer.WIDTH-200, 50);
+            Assets.nasaGame.draw(batch, countShield + "", 140, 50);
+            Assets.nasaGame.draw(batch, countMissile + "", spaceExplorer.WIDTH-200, 50);
             if(gameOver)
-            batch.draw(Assets.gameOver, Gdx.graphics.getWidth()/2 - Assets.gameOver.getWidth()/2, Gdx.graphics.getHeight()/2 - Assets.gameOver.getHeight()/2);
+            batch.draw(Assets.gameOver, spaceExplorer.WIDTH/2 - Assets.gameOver.getWidth()/2, spaceExplorer.HEIGHT/2 - Assets.gameOver.getHeight()/2);
         batch.end();
     }
 

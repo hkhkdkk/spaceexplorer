@@ -16,6 +16,7 @@ public class Assets {
     public static BitmapFont nasa;
     public static BitmapFont space;
     public static BitmapFont spaceHow;
+    public static BitmapFont nasaGame;
     public static TextureAtlas menuAtlas;
     public static TextureAtlas gameAtlas;
     public static TextureAtlas utilAtlas;
@@ -37,7 +38,7 @@ public class Assets {
     public static Music menuMusic;
     public static Music gameMusic;
 
-    private static Texture loadTexture(String file){
+    public static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
     }
 
@@ -57,6 +58,8 @@ public class Assets {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 70;
         nasa = generator.generateFont(parameter);
+        parameter.size = 35;
+        nasaGame = generator.generateFont(parameter);
         generator.dispose();
         
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
@@ -96,6 +99,7 @@ public class Assets {
         nasa.dispose();
         space.dispose();
         spaceHow.dispose();
+        nasaGame.dispose();
         
         // textures from atlas
         PLAYER.dispose();

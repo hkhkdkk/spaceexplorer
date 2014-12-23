@@ -1,4 +1,8 @@
 android {
+    signingConfigs {
+        config {
+        }
+    }
     buildToolsVersion "20.0.0"
     compileSdkVersion 19
     sourceSets {
