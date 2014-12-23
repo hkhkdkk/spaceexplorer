@@ -18,6 +18,7 @@ public class Assets {
     public static BitmapFont spaceHow;
     public static TextureAtlas menuAtlas;
     public static TextureAtlas gameAtlas;
+    public static TextureAtlas utilAtlas;
     public static Texture background;
     public static Texture gameBack;
     public static Texture arrow;
@@ -28,6 +29,7 @@ public class Assets {
     public static Texture SHIELDPU;
     public static Texture MISSILEPU;
     public static Texture dummy;
+    public static Texture gameOver;
 
     public static Sound hitSound;
     public static Sound hitpuSound;
@@ -48,6 +50,7 @@ public class Assets {
         arrow = loadTexture("ui/arrow.png");
         arrowflip = loadTexture("ui/arrowflip.png");
         dummy = loadTexture("badlogic.jpg");
+        gameOver = loadTexture("ui/gameover.png");
 
         // fonts
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
@@ -66,6 +69,7 @@ public class Assets {
         // textures from atlas
         menuAtlas = new TextureAtlas(Gdx.files.internal("ui/menu.atlas"));
         gameAtlas = new TextureAtlas(Gdx.files.internal("ui/game.atlas"));
+        utilAtlas = new TextureAtlas(Gdx.files.internal("ui/util.pack"));
 
         PLAYER = gameAtlas.findRegion("ship").getTexture();
         OBSTACLE = gameAtlas.findRegion("meteorGrey_big1").getTexture();
@@ -86,6 +90,7 @@ public class Assets {
         background.dispose();
         gameBack.dispose();
         arrow.dispose();
+        gameOver.dispose();
         
         // fonts
         nasa.dispose();
@@ -108,5 +113,6 @@ public class Assets {
 
         menuAtlas.dispose();
         gameAtlas.dispose();
+        utilAtlas.dispose();
     }
 }
