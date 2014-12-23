@@ -16,7 +16,7 @@ public class SplashScreen extends BaseScreen {
 
     public SplashScreen(SpaceExplorer s){
         super(s);
-        texture = new Texture(Gdx.files.internal("badlogic.jpg"));
+        texture = new Texture(Gdx.files.internal("splashscreen.png"));
         splashImage = new Image(texture);
         splashImage.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
         stage.addActor(splashImage);
