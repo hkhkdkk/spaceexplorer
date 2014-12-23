@@ -7,10 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tekmob.spaceexplorer.Assets;
+import com.tekmob.spaceexplorer.Controller.PreferenceController;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
 /**
@@ -27,12 +29,25 @@ public class EncyclopediaScreen extends BaseScreen {
     public EncyclopediaScreen(SpaceExplorer s){
         super(s);
         table = new Table();
-        skin = new Skin();
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         skin.addRegions(Assets.gameAtlas);
 
-        loadUI();
-        createUI();
-        setupHandler();
+        List list = new List(skin);
+        PreferenceController prefCont = new PreferenceController();
+        String item;
+
+        for(int i=0; i<10; i++){
+            item = prefCont.getNameOfEncyclopedia(PreferenceController.ITEM + i);
+            Gdx.app.log("Pesan", item);
+            list.setItems((Object)item);
+
+        }
+
+        table.add(list);
+
+        //loadUI();
+        //createUI();
+        //setupHandler();
 
         stage.addActor(backgorund);
         stage.addActor(table);

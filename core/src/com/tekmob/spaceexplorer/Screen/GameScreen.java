@@ -1,6 +1,7 @@
 package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -63,7 +64,8 @@ public class GameScreen extends BaseScreen {
     private float adjustedY;
     private int obstacleVelocity = 0;
     private int powerupVelocity = 0;
-    private float posMissileX = 0, posMissileY = 0;
+    private int tempScore = 0;
+    private float timer = 0;
     private boolean drawMissile = false;
     private boolean gameOver = false, activedMissile = false, activedShield = false;
 
@@ -130,6 +132,8 @@ public class GameScreen extends BaseScreen {
         countShield = 0;
         countMissile = 0;
         miles = 0.0;
+        timer = 0;
+        tempScore = 0;
         activedMissile = false;
         activedShield = false;
 
@@ -141,19 +145,36 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(delta);
+        stage.draw();
         drawWorld();
         updateWorld();
+        onBackScreen();
     }
 
     private void updateWorld(){
         float deltaTime = Gdx.graphics.getDeltaTime();
+        timer += deltaTime;
+
         rectShip.set(ship.position.x, ship.position.y, ship.image.getRegionWidth(), ship.image.getRegionHeight());
         rectShield.set(ship.position.x, ship.position.y, imgShield.getRegionWidth(), imgShield.getRegionHeight());
 
         if(!gameOver){
             powerupVelocity = 250;
             obstacleVelocity = 300;
+
+            if (timer >= 1) {
+                score++;
+                tempScore++;
+                timer -= 1;
+            }
+
+            if(tempScore >= 60){
+                miles++;
+                tempScore = 0;
+            }
+
             controlInput();
         }
 
@@ -198,13 +219,11 @@ public class GameScreen extends BaseScreen {
                 Missile mis = iterMissile.next();
                 mis.position.y += powerupVelocity * deltaTime;
 
-                rectMissile.set(mis.position.x, mis.position.y, mis.image.getRegionWidth(), mis.image.getRegionHeight());
-
                 if(mis.position.y > spaceExplorer.HEIGHT){
                     iterMissile.remove();
                 }
 
-                if(rectObstacle.overlaps(rectMissile)){
+                if(mis.getBounds().overlaps(o.getBounds())){
                     iterMissile.remove();
                     iterObstacle.remove();
                 }
@@ -226,6 +245,7 @@ public class GameScreen extends BaseScreen {
 
             if(rectPowerUpMissile.overlaps(rectShip)){
                 countMissile++;
+                score += score + 2;
                 Assets.hitpuSound.play();
                 iterPowerUpMissile.remove();
             }
@@ -242,6 +262,7 @@ public class GameScreen extends BaseScreen {
 
             if(rectPowerUpShield.overlaps(rectShip)){
                 countShield++;
+                score += score + 2;
                 Assets.hitpuSound.play();
                 iterPowerUpShield.remove();
             }
@@ -325,7 +346,7 @@ public class GameScreen extends BaseScreen {
         buttonMissile.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(countMissile != 0 && !activedMissile) {
+                if (countMissile != 0 && !activedMissile) {
                     countMissile--;
                     activedMissile = true;
                 }
@@ -354,16 +375,12 @@ public class GameScreen extends BaseScreen {
     }
 
     private void spawnPUShield(){
-        powerUpShield.add(new PUShield(MathUtils.random(0, spaceExplorer.WIDTH - 51),spaceExplorer.HEIGHT, imgShieldPU));
+        powerUpShield.add(new PUShield(MathUtils.random(0, spaceExplorer.WIDTH - 51), spaceExplorer.HEIGHT, imgShieldPU));
         lastShieldSpawnTime = TimeUtils.nanoTime();
     }
 
     private void spawnMisille(){
         missile.add(new Missile(ship.position.x+(ship.image.getRegionWidth()/2), ship.position.y+10+(ship.image.getRegionHeight()/2), imgMissile));
-    }
-
-    private void spawnShield(){
-
     }
 
     @Override
@@ -376,7 +393,6 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         skin.dispose();
         batch.dispose();
-        Assets.dispose();
         super.dispose();
     }
 
@@ -389,6 +405,9 @@ public class GameScreen extends BaseScreen {
             this.position.y = y;
             this.image = image;
         }
+        public Rectangle getBounds(){
+            return new Rectangle(position.x, position.y, image.getRegionWidth(), image.getRegionHeight());
+        }
     }
 
     static class Missile{
@@ -399,6 +418,10 @@ public class GameScreen extends BaseScreen {
             this.position.x = x;
             this.position.y = y;
             this.image = image;
+        }
+
+        public Rectangle getBounds(){
+            return new Rectangle(position.x, position.y, image.getRegionWidth(), image.getRegionHeight());
         }
     }
 
@@ -411,6 +434,10 @@ public class GameScreen extends BaseScreen {
             this.position.y = y;
             this.image = image;
         }
+
+        public Rectangle getBounds(){
+            return new Rectangle(position.x, position.y, image.getRegionWidth(), image.getRegionHeight());
+        }
     }
 
     static class PUShield{
@@ -422,6 +449,10 @@ public class GameScreen extends BaseScreen {
             this.position.y = y;
             this.image = image;
         }
+
+        public Rectangle getBounds(){
+            return new Rectangle(position.x, position.y, image.getRegionWidth(), image.getRegionHeight());
+        }
     }
 
     static class Plane{
@@ -432,6 +463,10 @@ public class GameScreen extends BaseScreen {
             this.position.x = x;
             this.position.y = y;
             this.image = image;
+        }
+
+        public Rectangle getBounds(){
+            return new Rectangle(position.x, position.y, image.getRegionWidth(), image.getRegionHeight());
         }
     }
 }

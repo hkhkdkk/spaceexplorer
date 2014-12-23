@@ -53,13 +53,13 @@ public class Assets {
         gameOver = loadTexture("ui/gameover.png");
 
         // fonts
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 70;
         nasa = generator.generateFont(parameter);
         generator.dispose();
         
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
         parameter.size = 60;
         space = generator.generateFont(parameter);
         parameter.size = 35;
