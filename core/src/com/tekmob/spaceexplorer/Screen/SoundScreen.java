@@ -110,7 +110,6 @@ public class SoundScreen extends BaseScreen {
     private void setuphandler(){
 
         soundEffectsCheckbox.setChecked(spaceExplorer.getPrefController().isSoundEnabled());
-        Gdx.app.log("LOG SOUND", spaceExplorer.getPreferences().isSoundEnabled()+"");
         soundEffectsCheckbox.addListener( new ChangeListener() {
             @Override
             public void changed(

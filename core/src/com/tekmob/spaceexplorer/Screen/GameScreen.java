@@ -265,7 +265,7 @@ public class GameScreen extends BaseScreen {
                 countMissile++;
 
                 score = score + 1;
-                if(spaceExplorer.getPreferences().isSoundEnabled())
+                if(spaceExplorer.getPrefController().isSoundEnabled())
                 Assets.hitpuSound.play();
                 iterPowerUpMissile.remove();
             }
@@ -283,7 +283,7 @@ public class GameScreen extends BaseScreen {
             if(sh.getBounds().overlaps(ship.getBounds())){
                 countShield++;
                 score = score + 2;
-                if(spaceExplorer.getPreferences().isSoundEnabled())
+                if(spaceExplorer.getPrefController().isSoundEnabled())
                 Assets.hitpuSound.play();
                 iterPowerUpShield.remove();
             }
@@ -301,7 +301,7 @@ public class GameScreen extends BaseScreen {
 
         if(activedMissile){
             obstacles.clear();
-            if(spaceExplorer.getPreferences().isSoundEnabled())
+            if(spaceExplorer.getPrefController().isSoundEnabled())
             Assets.hitSound.play(3f);
             activedMissile = false;
         }
@@ -409,8 +409,8 @@ public class GameScreen extends BaseScreen {
         else if( adjustedX > 1.5f ) adjustedX = 1f;*/
 
         adjustedY = Gdx.input.getAccelerometerY()-2f;
-        if( adjustedY < -0.5f ) ship.position.x -= 1f + VELOCITY_PLANE;
-        else if( adjustedY > 0.5f ) ship.position.x += 1f + VELOCITY_PLANE;
+        if( adjustedY < -1f ) ship.position.x -= 2f + VELOCITY_PLANE;
+        else if( adjustedY > 1f ) ship.position.x += 2f + VELOCITY_PLANE;
 
         /*
         if(adjustedY == -1f) plane.x-= (Math.abs(adjustedY) + VELOCITY_PLANE);
