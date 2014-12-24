@@ -44,11 +44,7 @@ public class GameScreen extends BaseScreen {
     private OrthographicCamera camera;
     private Plane ship;
 
-    private Rectangle rectObstacle;
-    private Rectangle rectMissile;
-    private Rectangle rectPowerUpMissile;
     private Rectangle rectShield;
-    private Rectangle rectPowerUpShield;
     private Rectangle rectShip;
 
     private Array<Obstacle> obstacles;
@@ -58,13 +54,14 @@ public class GameScreen extends BaseScreen {
 
     private long lastObstacleSpawnTime = 0, lastMissileSpawnTime = 0, lastShieldSpawnTime = 0;
     private int score = 0;
+    private int seconds = 0;
     private double miles = 0.0;
+    private int temp = 0;
     private int countShield = 0;
     private int countMissile = 0;
     private float adjustedY;
     private int obstacleVelocity = 0;
     private int powerupVelocity = 0;
-    private int tempScore = 0;
     private float timer = 0;
     private boolean drawMissile = false;
     private boolean gameOver = false, activedMissile = false, activedShield = false;
@@ -74,7 +71,7 @@ public class GameScreen extends BaseScreen {
         super(s);
 
         batch = new SpriteBatch();
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        skin = new Skin();
         skin.addRegions(Assets.gameAtlas);
 
         camera = new OrthographicCamera();
@@ -94,13 +91,8 @@ public class GameScreen extends BaseScreen {
         background = new Image(Assets.gameBack);
         background.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
 
-        rectObstacle = new Rectangle();
-        rectMissile = new Rectangle();
-        rectPowerUpMissile = new Rectangle();
         rectShield = new Rectangle();
-        rectPowerUpShield = new Rectangle();
         rectShip = new Rectangle();
-        rectShield = new Rectangle();
 
         obstacles = new Array<Obstacle>();
         powerUpMissile = new Array<PUMissile>();
@@ -133,7 +125,8 @@ public class GameScreen extends BaseScreen {
         countMissile = 0;
         miles = 0.0;
         timer = 0;
-        tempScore = 0;
+        seconds = 0;
+        temp = 0;
         activedMissile = false;
         activedShield = false;
 
@@ -161,18 +154,26 @@ public class GameScreen extends BaseScreen {
         rectShield.set(ship.position.x, ship.position.y, imgShield.getRegionWidth(), imgShield.getRegionHeight());
 
         if(!gameOver){
-            powerupVelocity = 250;
-            obstacleVelocity = 300;
+
+            if(score >= 40){
+                obstacleVelocity = 320;
+            }
+            else{
+                obstacleVelocity = 300;
+            }
+
+            powerupVelocity = 220;
 
             if (timer >= 1) {
                 score++;
-                tempScore++;
                 timer -= 1;
+                seconds++;
+                temp++;
             }
 
-            if(tempScore >= 60){
-                miles++;
-                tempScore = 0;
+            if(temp >= 30){
+                miles += 0.5;
+                temp = 0;
             }
 
             controlInput();
@@ -183,6 +184,10 @@ public class GameScreen extends BaseScreen {
             obstacleVelocity = 0;
             if(Gdx.input.justTouched()) {
                 gameOver = false;
+
+                cekUnlockedPlanet();
+                cekStatus();
+
                 resetWorld();
             }
         }
@@ -192,18 +197,16 @@ public class GameScreen extends BaseScreen {
         Iterator<Obstacle> iterObstacle = obstacles.iterator();
         Iterator<PUMissile> iterPowerUpMissile = powerUpMissile.iterator();
         Iterator<PUShield> iterPowerUpShield = powerUpShield.iterator();
-        Iterator<Missile> iterMissile = missile.iterator();
 
         while (iterObstacle.hasNext()){
             Obstacle o = iterObstacle.next();
             o.position.y -= obstacleVelocity * deltaTime;
-            rectObstacle.set(o.position.x, o.position.y, o.image.getRegionWidth(), o.image.getRegionHeight());
 
             if(o.position.y + o.image.getRegionHeight() < 0){
                 iterObstacle.remove();
             }
 
-            if(rectObstacle.overlaps(rectShip)){
+            if(o.getBounds().overlaps(rectShip)){
                 if(!activedShield){
                     Assets.hitSound.play();
                     iterObstacle.remove();
@@ -215,7 +218,7 @@ public class GameScreen extends BaseScreen {
                 }
             }
 
-            while (iterMissile.hasNext()){
+            /*while (iterMissile.hasNext()){
                 Missile mis = iterMissile.next();
                 mis.position.y += powerupVelocity * deltaTime;
 
@@ -231,36 +234,35 @@ public class GameScreen extends BaseScreen {
                 if(mis == null){
                     drawMissile = false;
                 }
-            }
+            }*/
         }
 
         while (iterPowerUpMissile.hasNext()){
             PUMissile mis = iterPowerUpMissile.next();
             mis.position.y -= powerupVelocity * deltaTime;
-            rectPowerUpMissile.set(mis.position.x, mis.position.y, mis.image.getRegionWidth(), mis.image.getRegionHeight());
 
             if(mis.position.y + mis.image.getRegionHeight() < 0){
                 iterPowerUpMissile.remove();
             }
 
-            if(rectPowerUpMissile.overlaps(rectShip)){
+            if(mis.getBounds().overlaps(rectShip)){
                 countMissile++;
-                score += score + 2;
+                score += score + 1;
                 Assets.hitpuSound.play();
                 iterPowerUpMissile.remove();
             }
+
         }
 
         while (iterPowerUpShield.hasNext()){
             PUShield sh = iterPowerUpShield.next();
             sh.position.y -= powerupVelocity * deltaTime;
-            rectPowerUpShield.set(sh.position.x, sh.position.y, sh.image.getRegionWidth(), sh.image.getRegionHeight());
 
             if(sh.position.y + sh.image.getRegionHeight() < 0){
                 iterPowerUpShield.remove();
             }
 
-            if(rectPowerUpShield.overlaps(rectShip)){
+            if(sh.getBounds().overlaps(rectShip)){
                 countShield++;
                 score += score + 2;
                 Assets.hitpuSound.play();
@@ -271,14 +273,20 @@ public class GameScreen extends BaseScreen {
     }
 
     private void spawnEntity(){
-        if(TimeUtils.nanoTime() - lastObstacleSpawnTime > MathUtils.random(150000000,200000000)) spawnObstacle();
-        if(TimeUtils.nanoTime() - lastMissileSpawnTime > MathUtils.random(1500000000,2000000000)) spawnPUMissile();
-        if(TimeUtils.nanoTime() - lastShieldSpawnTime > MathUtils.random(1800000000,2000000000)) spawnPUShield();
-        if(activedMissile) {
-            spawnMisille();
-            drawMissile = true;
+        if(TimeUtils.nanoTime() - lastObstacleSpawnTime > MathUtils.random(180000000,200000000)) spawnObstacle();
+
+        if(seconds >= 6) {
+            spawnPUMissile();
+            seconds = 0;
+        }
+
+        if(activedMissile){
+            obstacles.clear();
+            Assets.hitSound.play(3f);
             activedMissile = false;
         }
+
+        if(TimeUtils.nanoTime() - lastShieldSpawnTime > MathUtils.random(1800000000,2000000000)) spawnPUShield();
     }
 
     private void drawWorld(){
@@ -298,21 +306,14 @@ public class GameScreen extends BaseScreen {
             for(PUShield sh:powerUpShield){
                 batch.draw(sh.image, sh.position.x, sh.position.y);
             }
-
-            if(drawMissile) {
-                for (Missile mis : missile) {
-                    batch.draw(mis.image, mis.position.x, mis.position.y);
-                }
-            }
-
         batch.end();
 
         batch.begin();
             Assets.nasaGame.draw(batch, miles + " AU", 20, spaceExplorer.HEIGHT - 10);
-            Assets.nasaGame.draw(batch, "score: "+score, spaceExplorer.WIDTH-230, spaceExplorer.HEIGHT-10);
+            Assets.nasaGame.draw(batch, "score: "+score, spaceExplorer.WIDTH-240, spaceExplorer.HEIGHT-10);
             batch.draw(imgPlane, ship.position.x, ship.position.y);
             if(activedShield)
-            batch.draw(imgShield, ship.position.x - 10, ship.position.y);
+                batch.draw(imgShield, ship.position.x - 10, ship.position.y);
             buttonShield.draw(batch,1f);
             buttonMissile.draw(batch,1f);
             Assets.nasaGame.draw(batch, countShield + "", 140, 50);
@@ -322,13 +323,21 @@ public class GameScreen extends BaseScreen {
         batch.end();
     }
 
+    private void cekUnlockedPlanet(){
+
+    }
+
+    private void cekStatus(){
+
+    }
+
     private void controlInput(){
         //maju mundur
         /*adjustedX = Gdx.input.getAccelerometerX()-2f;
         if( adjustedX < - 1.5f ) adjustedX = - 1f;
         else if( adjustedX > 1.5f ) adjustedX = 1f;*/
 
-        adjustedY = Gdx.input.getAccelerometerY();
+        adjustedY = Gdx.input.getAccelerometerY()-1f;
         if( adjustedY < -1f ) ship.position.x -= Math.abs(adjustedY) + VELOCITY_PLANE;
         else if( adjustedY > 1f ) ship.position.x += Math.abs(adjustedY) + VELOCITY_PLANE;
 
@@ -365,13 +374,12 @@ public class GameScreen extends BaseScreen {
     }
 
     private void spawnObstacle(){
-        obstacles.add(new Obstacle(MathUtils.random(0, spaceExplorer.WIDTH - 101),spaceExplorer.HEIGHT, imgObstacle));
+        obstacles.add(new Obstacle(MathUtils.random(0, spaceExplorer.WIDTH - 101), spaceExplorer.HEIGHT, imgObstacle));
         lastObstacleSpawnTime = TimeUtils.nanoTime();
     }
 
     private void spawnPUMissile(){
         powerUpMissile.add(new PUMissile(MathUtils.random(0, spaceExplorer.WIDTH - 51), spaceExplorer.HEIGHT, imgMissilePU));
-        lastMissileSpawnTime = TimeUtils.nanoTime();
     }
 
     private void spawnPUShield(){
@@ -379,9 +387,9 @@ public class GameScreen extends BaseScreen {
         lastShieldSpawnTime = TimeUtils.nanoTime();
     }
 
-    private void spawnMisille(){
+    /*private void spawnMisille(){
         missile.add(new Missile(ship.position.x+(ship.image.getRegionWidth()/2), ship.position.y+10+(ship.image.getRegionHeight()/2), imgMissile));
-    }
+    }*/
 
     @Override
     public void show() {

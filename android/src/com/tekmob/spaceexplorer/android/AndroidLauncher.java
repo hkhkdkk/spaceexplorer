@@ -18,7 +18,5 @@ public class AndroidLauncher extends AndroidApplication {
         config.useCompass = true;
 		initialize(new SpaceExplorer(), config);
 
-        // test preferences
-        PreferenceController preferenceController = new PreferenceController();
-	}
+    }
 }

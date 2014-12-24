@@ -52,6 +52,12 @@ public class StatScreen extends BaseScreen {
         l.fontColor = Color.WHITE;
         title = new Label("STATS", l);
 
+        l.font = Assets.roboto;
+        highscore = new Label("Highscore : ",l);
+        maxMilestone = new Label("Last Milestone : ",l);
+        maxMissile = new Label("Maximum Missile : ",l);
+        maxShield = new Label("Maximum Shield : ",l);
+
         back = new Image(Assets.arrow);
 
         backgorund = new Image(Assets.background);
@@ -62,6 +68,10 @@ public class StatScreen extends BaseScreen {
         table.setFillParent(true);
         table.top();
         table.add(title).padBottom(50).padTop(20).expandX().row();
+        table.add(highscore).left().padLeft(30).padBottom(30).padTop(40).row();
+        table.add(maxMilestone).left().padLeft(30).padBottom(30).padTop(30).row();
+        table.add(maxMissile).left().padLeft(30).padBottom(30).padTop(30).row();
+        table.add(maxShield).left().padLeft(30).padBottom(30).padTop(30).row();
         table.add(back).left();
     }
 }

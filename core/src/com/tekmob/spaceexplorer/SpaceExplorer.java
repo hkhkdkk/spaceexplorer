@@ -2,6 +2,7 @@ package com.tekmob.spaceexplorer;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.tekmob.spaceexplorer.Screen.EncyclopediaScreen;
 import com.tekmob.spaceexplorer.Screen.SplashScreen;
 
 public class SpaceExplorer extends Game {

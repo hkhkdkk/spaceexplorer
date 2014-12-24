@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 /**
@@ -17,6 +18,7 @@ public class Assets {
     public static BitmapFont space;
     public static BitmapFont spaceHow;
     public static BitmapFont nasaGame;
+    public static BitmapFont roboto;
     public static TextureAtlas menuAtlas;
     public static TextureAtlas gameAtlas;
     public static TextureAtlas utilAtlas;
@@ -25,7 +27,7 @@ public class Assets {
     public static Texture arrow;
     public static Texture arrowflip;
     public static Texture PLAYER;
-    public static Texture OBSTACLE;
+    public static TextureRegion OBSTACLE;
     public static Texture MISSILE;
     public static Texture SHIELDPU;
     public static Texture MISSILEPU;
@@ -50,7 +52,6 @@ public class Assets {
         gameBack = loadTexture("ui/bg_game.png");
         arrow = loadTexture("ui/arrow.png");
         arrowflip = loadTexture("ui/arrowflip.png");
-        dummy = loadTexture("badlogic.jpg");
         gameOver = loadTexture("ui/gameover.png");
 
         // fonts
@@ -61,8 +62,10 @@ public class Assets {
         parameter.size = 35;
         nasaGame = generator.generateFont(parameter);
         generator.dispose();
-        
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/space.ttf"));
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/roboto.ttf"));
+        parameter.size = 35;
+        roboto = generator.generateFont(parameter);
         parameter.size = 60;
         space = generator.generateFont(parameter);
         parameter.size = 35;
@@ -75,7 +78,7 @@ public class Assets {
         utilAtlas = new TextureAtlas(Gdx.files.internal("ui/util.pack"));
 
         PLAYER = gameAtlas.findRegion("ship").getTexture();
-        OBSTACLE = gameAtlas.findRegion("meteorGrey_big1").getTexture();
+        OBSTACLE = gameAtlas.findRegion("meteorGrey_big1");
         MISSILE = gameAtlas.findRegion("missile").getTexture();
         MISSILEPU = gameAtlas.findRegion("pushield1").getTexture();
         SHIELDPU = gameAtlas.createSprite("pumissile1").getTexture();
@@ -100,10 +103,10 @@ public class Assets {
         space.dispose();
         spaceHow.dispose();
         nasaGame.dispose();
+        roboto.dispose();
         
         // textures from atlas
         PLAYER.dispose();
-        OBSTACLE.dispose();
         MISSILE.dispose();
         SHIELDPU.dispose();
         MISSILEPU.dispose();  	

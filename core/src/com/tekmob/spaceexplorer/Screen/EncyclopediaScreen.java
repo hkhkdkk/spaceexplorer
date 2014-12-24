@@ -32,10 +32,8 @@ public class EncyclopediaScreen extends BaseScreen {
     private Image backgorund;
     private Image back;
     private Skin skin;
-    private List list;
     private ScrollPane sc;
     private PreferenceController prefCont;
-    private ArrayList<TextButton> listContent;
 
     private Image item1;
     private Image item2;
@@ -50,17 +48,8 @@ public class EncyclopediaScreen extends BaseScreen {
 
     public EncyclopediaScreen(SpaceExplorer s){
         super(s);
-
         table = new Table();
         container = new Table();
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        skin.addRegions(Assets.gameAtlas);
-
-        list = new List(skin);
-
-        listContent = new ArrayList<TextButton>();
-        prefCont = new PreferenceController();
-
 
         loadUI();
         createUI();
@@ -84,6 +73,69 @@ public class EncyclopediaScreen extends BaseScreen {
             }
         });
 
+
+        item2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item2(spaceExplorer));
+            }
+        });
+
+        item3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item3(spaceExplorer));
+            }
+        });
+
+        item4.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item4(spaceExplorer));
+            }
+        });
+
+        item5.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item5(spaceExplorer));
+            }
+        });
+
+        item6.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item6(spaceExplorer));
+            }
+        });
+
+        item7.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item7(spaceExplorer));
+            }
+        });
+
+        item8.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item8(spaceExplorer));
+            }
+        });
+
+        item9.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item9(spaceExplorer));
+            }
+        });
+
+        item10.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                spaceExplorer.getScreenstack().push(new Item10(spaceExplorer));
+            }
+        });
 
     }
 
