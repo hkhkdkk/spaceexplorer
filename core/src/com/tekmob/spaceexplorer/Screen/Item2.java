@@ -20,6 +20,7 @@ public class Item2 extends BaseScreen {
     private Table table;
     private Label title;
     private Label distance;
+    private Label label;
     private Image backgorund;
     private Image back;
     private Image planet;
@@ -83,7 +84,7 @@ public class Item2 extends BaseScreen {
         Table table1 = new Table();
         table1.add(planet).row();
         table1.add(distance).row();
-
+        table1.add(Assets.fromEarth());
 
         table.setFillParent(true);
         table.top();

@@ -1,5 +1,6 @@
 package com.tekmob.spaceexplorer.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -49,7 +50,8 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void playMusic(){
-        if(spaceExplorer.getPreferences().isMusicEnabled()){
+        Gdx.app.log("MUSIC ENABLED", spaceExplorer.getPrefController().isMusicEnabled()+"");
+        if(spaceExplorer.getPrefController().isMusicEnabled()){
             Assets.gameMusic.setLooping(true);
             Assets.gameMusic.play();
         }

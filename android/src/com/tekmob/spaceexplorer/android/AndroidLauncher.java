@@ -17,6 +17,5 @@ public class AndroidLauncher extends AndroidApplication {
         config.useAccelerometer = true;
         config.useCompass = true;
 		initialize(new SpaceExplorer(), config);
-
     }
 }

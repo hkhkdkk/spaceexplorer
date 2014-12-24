@@ -1,5 +1,6 @@
 package com.tekmob.spaceexplorer.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -107,7 +108,9 @@ public class SoundScreen extends BaseScreen {
     }
 
     private void setuphandler(){
-        soundEffectsCheckbox.setChecked(spaceExplorer.getPreferences().isSoundEnabled());
+
+        soundEffectsCheckbox.setChecked(spaceExplorer.getPrefController().isSoundEnabled());
+        Gdx.app.log("LOG SOUND", spaceExplorer.getPreferences().isSoundEnabled()+"");
         soundEffectsCheckbox.addListener( new ChangeListener() {
             @Override
             public void changed(
@@ -115,11 +118,11 @@ public class SoundScreen extends BaseScreen {
                     Actor actor )
             {
                 boolean enabled = soundEffectsCheckbox.isChecked();
-                spaceExplorer.getPreferences().setSoundEnabled(enabled);
+                spaceExplorer.getPrefController().setSoundEnabled(enabled);
             }
         } );
 
-        musicCheckbox.setChecked(spaceExplorer.getPreferences().isMusicEnabled());
+        musicCheckbox.setChecked(spaceExplorer.getPrefController().isMusicEnabled());
         musicCheckbox.addListener( new ChangeListener() {
             @Override
             public void changed(
@@ -127,8 +130,7 @@ public class SoundScreen extends BaseScreen {
                     Actor actor )
             {
                 boolean enabled = musicCheckbox.isChecked();
-                spaceExplorer.getPreferences().setMusicEnabled(enabled);
-
+                spaceExplorer.getPrefController().setMusicEnabled(enabled);
                 if(enabled){
                     Assets.gameMusic.setLooping(true);
                     Assets.gameMusic.play();

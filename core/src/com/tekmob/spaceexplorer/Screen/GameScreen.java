@@ -1,6 +1,7 @@
 package com.tekmob.spaceexplorer.Screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.Controller.ObjectContainer;
 import com.tekmob.spaceexplorer.Controller.PreferenceController;
@@ -65,7 +67,7 @@ public class GameScreen extends BaseScreen {
     private int powerupVelocity = 0;
     private float timer = 0;
     private boolean gameOver = false, activedMissile = false, activedShield = false;
-
+    private boolean newHighscore = false, newUnlockedItem = false;
 
     public GameScreen(SpaceExplorer s){
         super(s);
@@ -124,6 +126,7 @@ public class GameScreen extends BaseScreen {
         timer = 0;
         seconds = 0;
         temp = 0;
+        newHighscore = false;
         activedMissile = false;
         activedShield = false;
 
@@ -141,6 +144,19 @@ public class GameScreen extends BaseScreen {
         drawWorld();
         updateWorld();
         onBackScreen();
+    }
+
+    @Override
+    public void onBackScreen() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
+            addStat();
+
+            for (int i = 0; i < 10; i++) {
+                cekUnlockedPlanet(ObjectContainer.objects.get(i));
+            }
+
+            if(onBack()) spaceExplorer.getScreenstack().pop();
+        }
     }
 
     private void updateWorld(){
@@ -161,15 +177,16 @@ public class GameScreen extends BaseScreen {
             powerupVelocity = 220;
 
             if (timer >= 1) {
+                Gdx.app.log("SEBELUM",score+"");
                 score++;
-                timer -= 1;
+                timer = 0;
                 seconds++;
                 temp++;
-                miles += 1.0;  //jangan lupa dihapus
+                Gdx.app.log("SESUDAH",score+"");
             }
 
             if(temp >= 30){
-                miles += 0.5;
+                miles += 1.0;
                 temp = 0;
             }
             controlInput();
@@ -179,13 +196,13 @@ public class GameScreen extends BaseScreen {
             powerupVelocity = 0;
             obstacleVelocity = 0;
 
-            for (int i = 0; i < 10; i++) {
-                cekUnlockedPlanet(ObjectContainer.objects.get(i));
-            }
-
-            addStat();
             if(Gdx.input.justTouched()) {
                 gameOver = false;
+                addStat();
+
+                for (int i = 0; i < 10; i++) {
+                    cekUnlockedPlanet(ObjectContainer.objects.get(i));
+                }
                 resetWorld();
             }
         }
@@ -206,7 +223,7 @@ public class GameScreen extends BaseScreen {
 
             if(o.getBounds().overlaps(ship.getBounds())){
                 if(!activedShield){
-                    if(spaceExplorer.getPreferences().isSoundEnabled())
+                    if(spaceExplorer.getPrefController().isSoundEnabled())
                     Assets.hitSound.play();
                     iterObstacle.remove();
                     gameOver = true;
@@ -246,11 +263,10 @@ public class GameScreen extends BaseScreen {
 
             if(mis.getBounds().overlaps(ship.getBounds())){
                 countMissile++;
-                score += score + 1;
 
+                score = score + 1;
                 if(spaceExplorer.getPreferences().isSoundEnabled())
                 Assets.hitpuSound.play();
-
                 iterPowerUpMissile.remove();
             }
 
@@ -266,8 +282,7 @@ public class GameScreen extends BaseScreen {
 
             if(sh.getBounds().overlaps(ship.getBounds())){
                 countShield++;
-                score += score + 2;
-
+                score = score + 2;
                 if(spaceExplorer.getPreferences().isSoundEnabled())
                 Assets.hitpuSound.play();
                 iterPowerUpShield.remove();
@@ -315,7 +330,7 @@ public class GameScreen extends BaseScreen {
 
         batch.begin();
             Assets.nasaGame.draw(batch, miles + " AU", 20, spaceExplorer.HEIGHT - 10);
-            Assets.nasaGame.draw(batch, "score: "+score, spaceExplorer.WIDTH-240, spaceExplorer.HEIGHT-10);
+            Assets.nasaGame.draw(batch, "score: "+score, spaceExplorer.WIDTH-260, spaceExplorer.HEIGHT-10);
             batch.draw(imgPlane, ship.position.x, ship.position.y);
             if(activedShield)
                 batch.draw(imgShield, ship.position.x - 10, ship.position.y);
@@ -323,18 +338,27 @@ public class GameScreen extends BaseScreen {
             buttonMissile.draw(batch,1f);
             Assets.nasaGame.draw(batch, countShield + "", 140, 50);
             Assets.nasaGame.draw(batch, countMissile + "", spaceExplorer.WIDTH-200, 50);
+
+            if(score > spaceExplorer.getPrefController().getInteger(PreferenceController.STATISTIC, PreferenceController.SCORE) && !newHighscore){
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        Assets.roboto.draw(batch, "NEW HIGHSCORE", spaceExplorer.WIDTH/2, spaceExplorer.HEIGHT - 20);
+                    }
+                }, 3);
+                newHighscore = true;
+            }
+
             if(gameOver)
-            batch.draw(Assets.gameOver, spaceExplorer.WIDTH/2 - Assets.gameOver.getWidth()/2, spaceExplorer.HEIGHT/2 - Assets.gameOver.getHeight()/2);
+                batch.draw(Assets.gameOver, spaceExplorer.WIDTH/2 - Assets.gameOver.getWidth()/2, spaceExplorer.HEIGHT/2 - Assets.gameOver.getHeight()/2);
         batch.end();
     }
 
-    PreferenceController prefCont = new PreferenceController();
-
     private void cekUnlockedPlanet(SpaceObject spaceObject){
-        if(miles > spaceObject.getDistance()) {
+        if(miles >= spaceObject.getDistance()) {
             // do whatever
-            if (!prefCont.getAchievementStatus(spaceObject.getKey())) {
-                prefCont.unlockAchievement(spaceObject.getKey());
+            if (!spaceExplorer.getPrefController().getAchievementStatus(spaceObject.getKey())) {
+                spaceExplorer.getPrefController().unlockAchievement(spaceObject.getKey());
                 batch.begin();
                     Assets.roboto.draw(batch, spaceObject.getName(), spaceExplorer.WIDTH, spaceExplorer.HEIGHT/2+50);
                 batch.end();
@@ -344,36 +368,37 @@ public class GameScreen extends BaseScreen {
     }
 
     private void addStat(){
-        int prevHighScore = prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.SCORE);
+        int prevHighScore = spaceExplorer.getPrefController().getInteger(PreferenceController.STATISTIC, PreferenceController.SCORE);
         if (score > prevHighScore) {
-            prefCont.putData(PreferenceController.STATISTIC, PreferenceController.SCORE, score);
+            spaceExplorer.getPrefController().putData(PreferenceController.STATISTIC, PreferenceController.SCORE, score);
         }
 
-        int prevMaxMissile = prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.MISSILE);
-        if (countMissile > prevMaxMissile) {
-            prefCont.putData(PreferenceController.STATISTIC, PreferenceController.MISSILE, countMissile);
+        int prevMaxMissile = spaceExplorer.getPrefController().getInteger(PreferenceController.STATISTIC, PreferenceController.MISSILE);
+        if (countMissile > prevMaxMissile   ) {
+            spaceExplorer.getPrefController().putData(PreferenceController.STATISTIC, PreferenceController.MISSILE, countMissile);
         }
 
-        int prevMaxShield = prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.SHIELD);
+        int prevMaxShield = spaceExplorer.getPrefController().getInteger(PreferenceController.STATISTIC, PreferenceController.SHIELD);
         if (countShield > prevMaxShield) {
-            prefCont.putData(PreferenceController.STATISTIC, PreferenceController.SHIELD, countShield);
+            spaceExplorer.getPrefController().putData(PreferenceController.STATISTIC, PreferenceController.SHIELD, countShield);
         }
 
-        Gdx.app.log("LALALA",prefCont.getString(PreferenceController.STATISTIC, PreferenceController.MILESTONE));
-        String [] tempString = prefCont.getString(PreferenceController.STATISTIC, PreferenceController.MILESTONE).split("-");
-        Gdx.app.log("SHIT", tempString[0] + " " + tempString[1]);
+        String milestone = spaceExplorer.getPrefController().getString(PreferenceController.STATISTIC, PreferenceController.MILESTONE);
         String tempMile = "";
-        double distRequirement = ObjectContainer.objects.get(Integer.parseInt(tempString[1])).getDistance();
+        double distRequirement = ObjectContainer.objects.get(Integer.parseInt(milestone.substring(0,1))).getDistance();
+        Gdx.app.log("CHECK THIS", "" + distRequirement + " " + miles);
         if (miles > distRequirement) {
-            for (int i = Integer.parseInt(tempString[1]) + 1; i < 10; i++) {
+            for (int i = Integer.parseInt(milestone.substring(0,1)) + 1; i < 10; i++) {
                 if (miles < ObjectContainer.objects.get(i).getDistance()) {
-                    tempMile = ObjectContainer.objects.get(i).getName() + "-" + i;
+                    tempMile = i + "" + ObjectContainer.objects.get(i).getName();
                     break;
                 }
             }
+            Gdx.app.log("SEBELUM PUT", tempMile);
 
+            spaceExplorer.getPrefController().putData(PreferenceController.STATISTIC, PreferenceController.MILESTONE, tempMile);
         }
-        prefCont.putData(PreferenceController.STATISTIC, PreferenceController.MILESTONE, tempMile);
+
 
     }
 
@@ -383,9 +408,9 @@ public class GameScreen extends BaseScreen {
         if( adjustedX < - 1.5f ) adjustedX = - 1f;
         else if( adjustedX > 1.5f ) adjustedX = 1f;*/
 
-        adjustedY = Gdx.input.getAccelerometerY()-1f;
-        if( adjustedY < -1f ) ship.position.x -= Math.abs(adjustedY) + VELOCITY_PLANE;
-        else if( adjustedY > 1f ) ship.position.x += Math.abs(adjustedY) + VELOCITY_PLANE;
+        adjustedY = Gdx.input.getAccelerometerY()-2f;
+        if( adjustedY < -0.5f ) ship.position.x -= 1f + VELOCITY_PLANE;
+        else if( adjustedY > 0.5f ) ship.position.x += 1f + VELOCITY_PLANE;
 
         /*
         if(adjustedY == -1f) plane.x-= (Math.abs(adjustedY) + VELOCITY_PLANE);

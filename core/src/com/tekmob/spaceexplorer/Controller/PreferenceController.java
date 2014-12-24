@@ -19,10 +19,12 @@ public class PreferenceController {
     private Preferences achievement;
     private Preferences encyclopedia;
     private Preferences firstTime;
+    private Preferences game;
 
     final public static String STATISTIC = "Statistic";
     final public static String ACHIEVEMENT = "Achievement";
     final public static String ENCYCLOPEDIA = "Encyclopedia";
+    final public static String GAME = "Game";
     final public static String ITEM = "item";
 
     public static final String PLAYER_ID = "player_id";
@@ -33,6 +35,8 @@ public class PreferenceController {
     public static final String OBJECT = "object_discovered";
     public static final String GAMES = "total_games";
     public static final String MILESTONE = "longest_milestone";
+    public static final String MUSIC = "music";
+    public static final String SOUND = "sound";
 
     /**
      * Konstruktor untuk membuat instance PreferenceController
@@ -42,13 +46,18 @@ public class PreferenceController {
         statistic = Gdx.app.getPreferences(STATISTIC);
         achievement = Gdx.app.getPreferences(ACHIEVEMENT);
         encyclopedia = Gdx.app.getPreferences(ENCYCLOPEDIA);
+        game = Gdx.app.getPreferences(GAME);
+
         firstTime = Gdx.app.getPreferences("firstRun");
 
         // cek agar nilai shared preference tidak tertimpa setiap kali aplikasi dijalankan
         if (firstTime.getBoolean("first", true)) {
-            initStatistic();
+
             initAchievement();
             initEncyclopedia();
+            initStatistic();
+            initGame();
+
             // mark it as non-first run anymore
             firstTime.putBoolean("first", false);
             firstTime.flush();
@@ -61,6 +70,7 @@ public class PreferenceController {
             String [] spaceObject = new String[10];
             for (int i = 0; i < spaceObject.length; i++) {
                 spaceObject[i] = encyclopedia.getString(ITEM+i);
+                Gdx.app.log("SEBELUM ADD", spaceObject[i]);
             }
             ObjectContainer.initObject(spaceObject);
         }
@@ -79,8 +89,15 @@ public class PreferenceController {
         statistic.putInteger(SHIELD, 0);
         statistic.putInteger(OBJECT, 0);
         statistic.putInteger(GAMES, 0);
-        statistic.putString(MILESTONE, "Earth-0");
+        statistic.putString(MILESTONE, "0Earth");
         statistic.flush();
+        Gdx.app.log("HALO", statistic.getString(MILESTONE));
+    }
+
+    private void initGame(){
+        game.putBoolean(MUSIC, true);
+        game.putBoolean(SOUND, true);
+        game.flush();
     }
 
     /**
@@ -154,7 +171,8 @@ public class PreferenceController {
      */
     public String getString(String prefName, String key) {
         if (prefName.equalsIgnoreCase(STATISTIC)) {
-            return statistic.getString(key, "Data not found.");
+            Gdx.app.log("INI KENAPA", statistic.getString(key));
+            return statistic.getString(key);
         }
         return null;
     }
@@ -246,5 +264,23 @@ public class PreferenceController {
     public String getDescOfEncyclopedia(String itemName) {
         String [] temp = getInfoForEncyclopedia(itemName);
         return temp[3];
+    }
+
+    public void setMusicEnabled(boolean m){
+        game.putBoolean(MUSIC, m);
+        game.flush();
+    }
+
+    public void setSoundEnabled(boolean m){
+        game.putBoolean(SOUND, m);
+        game.flush();
+    }
+
+    public boolean isMusicEnabled(){
+        return game.getBoolean(MUSIC);
+    }
+
+    public boolean isSoundEnabled(){
+        return game.getBoolean(SOUND);
     }
 }

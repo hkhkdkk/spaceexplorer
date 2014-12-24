@@ -83,7 +83,7 @@ public class Item3 extends BaseScreen {
         Table table1 = new Table();
         table1.add(planet).row();
         table1.add(distance).row();
-
+        table1.add(Assets.fromEarth());
 
         table.setFillParent(true);
         table.top();

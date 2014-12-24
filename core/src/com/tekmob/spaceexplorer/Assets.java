@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
  * Created by Rahmat Rasyidi Hakim on 11/27/2014.
@@ -32,6 +34,7 @@ public class Assets {
     public static Sound hitSound;
     public static Sound hitpuSound;
     public static Music gameMusic;
+    public static Label label;
 
     public static String credit;
     public static Texture loadTexture(String file){
@@ -51,7 +54,6 @@ public class Assets {
         //file handle for credit
         FileHandle fileCredit = Gdx.files.internal("credit.txt");
         credit = fileCredit.readString();
-
 
         // fonts
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
@@ -80,6 +82,13 @@ public class Assets {
         hitpuSound = Gdx.audio.newSound(Gdx.files.internal("sound/pu.wav"));
 
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/game.mp3"));
+    }
+
+    public static Label fromEarth(){
+        Label.LabelStyle l = new Label.LabelStyle();
+        l.font = roboto;
+        l.fontColor = Color.WHITE;
+        return new Label("From Earth", l);
     }
 
     public static void dispose() {
