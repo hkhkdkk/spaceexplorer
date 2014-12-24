@@ -43,6 +43,7 @@ public class PreferenceController {
         achievement = Gdx.app.getPreferences(ACHIEVEMENT);
         encyclopedia = Gdx.app.getPreferences(ENCYCLOPEDIA);
         firstTime = Gdx.app.getPreferences("firstRun");
+
         // cek agar nilai shared preference tidak tertimpa setiap kali aplikasi dijalankan
         if (firstTime.getBoolean("first", true)) {
             initStatistic();
@@ -54,6 +55,14 @@ public class PreferenceController {
             Gdx.app.log("MESSAGE","Data inisialized for the first time.");
         } else {
             Gdx.app.log("MESSAGE","Data loaded from previous.");
+        }
+
+        if (ObjectContainer.checkObject()) {
+            String [] spaceObject = new String[10];
+            for (int i = 0; i < spaceObject.length; i++) {
+                spaceObject[i] = encyclopedia.getString(ITEM+i);
+            }
+            ObjectContainer.initObject(spaceObject);
         }
 
     }
@@ -70,7 +79,7 @@ public class PreferenceController {
         statistic.putInteger(SHIELD, 0);
         statistic.putInteger(OBJECT, 0);
         statistic.putInteger(GAMES, 0);
-        statistic.putString(MILESTONE, "Earth");
+        statistic.putString(MILESTONE, "Earth-0");
         statistic.flush();
     }
 

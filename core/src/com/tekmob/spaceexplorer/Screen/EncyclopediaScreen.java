@@ -31,9 +31,7 @@ public class EncyclopediaScreen extends BaseScreen {
     private Label title;
     private Image backgorund;
     private Image back;
-    private Skin skin;
     private ScrollPane sc;
-    private PreferenceController prefCont;
 
     private Image item1;
     private Image item2;
@@ -45,6 +43,7 @@ public class EncyclopediaScreen extends BaseScreen {
     private Image item8;
     private Image item9;
     private Image item10;
+    private PreferenceController prefCont = new PreferenceController();
 
     public EncyclopediaScreen(SpaceExplorer s){
         super(s);
@@ -69,6 +68,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                //cek dulu disini bisa gak dibuka?
+                if(prefCont.getAchievementStatus("item0"))
                 spaceExplorer.getScreenstack().push(new Item1(spaceExplorer));
             }
         });
@@ -77,6 +78,7 @@ public class EncyclopediaScreen extends BaseScreen {
         item2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(prefCont.getAchievementStatus("item1"))
                 spaceExplorer.getScreenstack().push(new Item2(spaceExplorer));
             }
         });
@@ -84,6 +86,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item2"))
                 spaceExplorer.getScreenstack().push(new Item3(spaceExplorer));
             }
         });
@@ -91,6 +95,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item3"))
                 spaceExplorer.getScreenstack().push(new Item4(spaceExplorer));
             }
         });
@@ -98,6 +104,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item4"))
                 spaceExplorer.getScreenstack().push(new Item5(spaceExplorer));
             }
         });
@@ -105,6 +113,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item6.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item5"))
                 spaceExplorer.getScreenstack().push(new Item6(spaceExplorer));
             }
         });
@@ -112,6 +122,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item7.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item6"))
                 spaceExplorer.getScreenstack().push(new Item7(spaceExplorer));
             }
         });
@@ -119,6 +131,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item8.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item7"))
                 spaceExplorer.getScreenstack().push(new Item8(spaceExplorer));
             }
         });
@@ -126,6 +140,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item9.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item8"))
                 spaceExplorer.getScreenstack().push(new Item9(spaceExplorer));
             }
         });
@@ -133,6 +149,8 @@ public class EncyclopediaScreen extends BaseScreen {
         item10.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                if(prefCont.getAchievementStatus("item9"))
                 spaceExplorer.getScreenstack().push(new Item10(spaceExplorer));
             }
         });

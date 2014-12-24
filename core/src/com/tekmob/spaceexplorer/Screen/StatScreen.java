@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tekmob.spaceexplorer.Assets;
+import com.tekmob.spaceexplorer.Controller.PreferenceController;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
 /**
@@ -22,6 +23,7 @@ public class StatScreen extends BaseScreen {
     private Image back;
     private Skin skin;
     private Label highscore, maxMissile, maxShield, maxMilestone;
+    private PreferenceController prefCont = new PreferenceController();
 
     public StatScreen(SpaceExplorer s){
         super(s);
@@ -69,9 +71,13 @@ public class StatScreen extends BaseScreen {
         table.top();
         table.add(title).padBottom(50).padTop(20).expandX().row();
         table.add(highscore).left().padLeft(30).padBottom(30).padTop(40).row();
+        table.add(prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.SCORE)+"");
         table.add(maxMilestone).left().padLeft(30).padBottom(30).padTop(30).row();
+        table.add(prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.MILESTONE)+"");
         table.add(maxMissile).left().padLeft(30).padBottom(30).padTop(30).row();
+        table.add(prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.MISSILE)+"");
         table.add(maxShield).left().padLeft(30).padBottom(30).padTop(30).row();
+        table.add(prefCont.getInteger(PreferenceController.STATISTIC, PreferenceController.SHIELD)+"");
         table.add(back).left();
     }
 }
