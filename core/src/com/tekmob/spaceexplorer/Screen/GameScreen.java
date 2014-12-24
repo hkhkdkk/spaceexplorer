@@ -25,6 +25,7 @@ import java.util.Iterator;
 /**
  * Created by Rahmat Rasyidi Hakim on 11/20/2014.
  */
+
 public class GameScreen extends BaseScreen {
 
     private static final int VELOCITY_PLANE = 7;
@@ -40,7 +41,6 @@ public class GameScreen extends BaseScreen {
     private TextureRegion imgButtonMissile;
     private TextureRegion imgMissilePU;
     private TextureRegion imgShieldPU;
-    private TextureRegion imgMissile;
     private TextureRegion imgShield;
     private Image buttonMissile;
     private Image buttonShield;
@@ -48,14 +48,12 @@ public class GameScreen extends BaseScreen {
     private Plane ship;
 
     private Rectangle rectShield;
-    private Rectangle rectShip;
 
     private Array<Obstacle> obstacles;
     private Array<PUMissile> powerUpMissile;
     private Array<PUShield> powerUpShield;
-    private Array<Missile> missile;
 
-    private long lastObstacleSpawnTime = 0, lastMissileSpawnTime = 0, lastShieldSpawnTime = 0;
+    private long lastObstacleSpawnTime = 0, lastShieldSpawnTime = 0;
     private int score = 0;
     private int seconds = 0;
     private double miles = 0.0;
@@ -66,7 +64,6 @@ public class GameScreen extends BaseScreen {
     private int obstacleVelocity = 0;
     private int powerupVelocity = 0;
     private float timer = 0;
-    private boolean drawMissile = false;
     private boolean gameOver = false, activedMissile = false, activedShield = false;
 
 
@@ -88,19 +85,16 @@ public class GameScreen extends BaseScreen {
         imgButtonMissile = skin.getRegion("missile");
         imgShieldPU = skin.getRegion("pushield1");
         imgMissilePU = skin.getRegion("pumissile1");
-        imgMissile = skin.getRegion("laserRed01");
         imgShield = skin.getRegion("shield1");
 
         background = new Image(Assets.gameBack);
         background.setSize(SpaceExplorer.WIDTH, SpaceExplorer.HEIGHT);
 
         rectShield = new Rectangle();
-        rectShip = new Rectangle();
 
         obstacles = new Array<Obstacle>();
         powerUpMissile = new Array<PUMissile>();
         powerUpShield = new Array<PUShield>();
-        missile = new Array<Missile>();
 
         //setup button missile
         buttonMissile = new Image(imgButtonMissile);
@@ -153,13 +147,12 @@ public class GameScreen extends BaseScreen {
         float deltaTime = Gdx.graphics.getDeltaTime();
         timer += deltaTime;
 
-        rectShip.set(ship.position.x, ship.position.y, ship.image.getRegionWidth(), ship.image.getRegionHeight());
         rectShield.set(ship.position.x, ship.position.y, imgShield.getRegionWidth(), imgShield.getRegionHeight());
 
         if(!gameOver){
 
             if(score >= 40){
-                obstacleVelocity = 10; //320
+                obstacleVelocity = 320; //320 <- Jangan Lupa Tukar lagi
             }
             else{
                 obstacleVelocity = 300;
@@ -172,14 +165,13 @@ public class GameScreen extends BaseScreen {
                 timer -= 1;
                 seconds++;
                 temp++;
-                miles += 1.0;
+                miles += 1.0;  //jangan lupa dihapus
             }
 
             if(temp >= 30){
                 miles += 0.5;
                 temp = 0;
             }
-
             controlInput();
         }
 
@@ -212,8 +204,9 @@ public class GameScreen extends BaseScreen {
                 iterObstacle.remove();
             }
 
-            if(o.getBounds().overlaps(rectShip)){
+            if(o.getBounds().overlaps(ship.getBounds())){
                 if(!activedShield){
+                    if(spaceExplorer.getPreferences().isSoundEnabled())
                     Assets.hitSound.play();
                     iterObstacle.remove();
                     gameOver = true;
@@ -251,10 +244,13 @@ public class GameScreen extends BaseScreen {
                 iterPowerUpMissile.remove();
             }
 
-            if(mis.getBounds().overlaps(rectShip)){
+            if(mis.getBounds().overlaps(ship.getBounds())){
                 countMissile++;
                 score += score + 1;
+
+                if(spaceExplorer.getPreferences().isSoundEnabled())
                 Assets.hitpuSound.play();
+
                 iterPowerUpMissile.remove();
             }
 
@@ -268,9 +264,11 @@ public class GameScreen extends BaseScreen {
                 iterPowerUpShield.remove();
             }
 
-            if(sh.getBounds().overlaps(rectShip)){
+            if(sh.getBounds().overlaps(ship.getBounds())){
                 countShield++;
                 score += score + 2;
+
+                if(spaceExplorer.getPreferences().isSoundEnabled())
                 Assets.hitpuSound.play();
                 iterPowerUpShield.remove();
             }
@@ -288,6 +286,7 @@ public class GameScreen extends BaseScreen {
 
         if(activedMissile){
             obstacles.clear();
+            if(spaceExplorer.getPreferences().isSoundEnabled())
             Assets.hitSound.play(3f);
             activedMissile = false;
         }
@@ -465,6 +464,7 @@ public class GameScreen extends BaseScreen {
         }
     }
 
+    /*
     static class Missile{
         Vector2 position = new Vector2();
         TextureRegion image;
@@ -478,7 +478,7 @@ public class GameScreen extends BaseScreen {
         public Rectangle getBounds(){
             return new Rectangle(position.x, position.y, image.getRegionWidth(), image.getRegionHeight());
         }
-    }
+    }*/
 
     static class PUMissile{
         Vector2 position = new Vector2();

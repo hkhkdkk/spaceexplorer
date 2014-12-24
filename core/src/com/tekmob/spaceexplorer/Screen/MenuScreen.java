@@ -16,6 +16,7 @@ import com.tekmob.spaceexplorer.SpaceExplorer;
 /**
  * Created by Rahmat Rasyidi Hakim on 11/20/2014.
  */
+
 public class MenuScreen extends BaseScreen {
 
     private Skin skin;
@@ -32,6 +33,7 @@ public class MenuScreen extends BaseScreen {
         skin = new Skin();
         skin.addRegions(Assets.menuAtlas);
 
+        playMusic();
         loadUI();
         createUI();
         setuphandler();
@@ -39,13 +41,18 @@ public class MenuScreen extends BaseScreen {
         stage.addActor(background);
         stage.addActor(table);
     }
-    
-    
 
 	@Override
     public void dispose() {
         skin.dispose();
         super.dispose();
+    }
+
+    private void playMusic(){
+        if(spaceExplorer.getPreferences().isMusicEnabled()){
+            Assets.gameMusic.setLooping(true);
+            Assets.gameMusic.play();
+        }
     }
 
     private void setuphandler() {

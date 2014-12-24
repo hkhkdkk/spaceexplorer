@@ -1,9 +1,1 @@
-Application icon : Scott Lewis, thenounproject.com
-Setting icon : P.J. Onori, thenounproject.com
-Encyclopedia icon : Michael Rowe, thenounproject.com
-Highscore icon : Juliana Lliteras, thenounproject.com
-Missile icon : Rohan Gupta, thenounproject.com
-Shield icon : Misirlou, thenounproject.com
-Planet images : space-facts.com
-Asteroid image : MotoTsume, deviantart.com
-Aircraft, pills, asteroids asset : kenney.nl/assets
+Application icon : Scott Lewis, thenounproject.com, Setting icon : P.J. Onori, thenounproject.com, Encyclopedia icon : Michael Rowe, thenounproject.com, Highscore icon : Juliana Lliteras, thenounproject.com, Missile icon : Rohan Gupta, thenounproject.com, Shield icon : Misirlou, thenounproject.com, Planet images : space-facts.com, Asteroid image : MotoTsume, deviantart.com, Aircraft, pills, asteroids asset : kenney.nl/assets, Music : Henry Jackman Microbots OST Big Hero 6

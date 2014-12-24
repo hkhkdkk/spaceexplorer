@@ -3,15 +3,16 @@ package com.tekmob.spaceexplorer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 /**
  * Created by Rahmat Rasyidi Hakim on 11/27/2014.
  */
+
 public class Assets {
 
     public static BitmapFont nasa;
@@ -26,20 +27,13 @@ public class Assets {
     public static Texture gameBack;
     public static Texture arrow;
     public static Texture arrowflip;
-    public static Texture PLAYER;
-    public static TextureRegion OBSTACLE;
-    public static Texture MISSILE;
-    public static Texture SHIELDPU;
-    public static Texture MISSILEPU;
-    public static Texture dummy;
     public static Texture gameOver;
 
     public static Sound hitSound;
     public static Sound hitpuSound;
-    public static Sound laserSound;
-    public static Music menuMusic;
     public static Music gameMusic;
 
+    public static String credit;
     public static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
     }
@@ -53,6 +47,11 @@ public class Assets {
         arrow = loadTexture("ui/arrow.png");
         arrowflip = loadTexture("ui/arrowflip.png");
         gameOver = loadTexture("ui/gameover.png");
+
+        //file handle for credit
+        FileHandle fileCredit = Gdx.files.internal("credit.txt");
+        credit = fileCredit.readString();
+
 
         // fonts
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
@@ -77,18 +76,10 @@ public class Assets {
         gameAtlas = new TextureAtlas(Gdx.files.internal("ui/game.atlas"));
         utilAtlas = new TextureAtlas(Gdx.files.internal("ui/util.pack"));
 
-        PLAYER = gameAtlas.findRegion("ship").getTexture();
-        OBSTACLE = gameAtlas.findRegion("meteorGrey_big1");
-        MISSILE = gameAtlas.findRegion("missile").getTexture();
-        MISSILEPU = gameAtlas.findRegion("pushield1").getTexture();
-        SHIELDPU = gameAtlas.createSprite("pumissile1").getTexture();
-
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sound/explode.wav"));
         hitpuSound = Gdx.audio.newSound(Gdx.files.internal("sound/pu.wav"));
-        laserSound = Gdx.audio.newSound(Gdx.files.internal("sound/laser.wav"));
 
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/game.mp3"));
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/menu.mp3"));
     }
 
     public static void dispose() {
@@ -104,20 +95,13 @@ public class Assets {
         spaceHow.dispose();
         nasaGame.dispose();
         roboto.dispose();
-        
-        // textures from atlas
-        PLAYER.dispose();
-        MISSILE.dispose();
-        SHIELDPU.dispose();
-        MISSILEPU.dispose();  	
 
         // sound
         hitSound.dispose();
         hitpuSound.dispose();
-        laserSound.dispose();
         gameMusic.dispose();
-        menuMusic.dispose();
 
+        //Atlas dispose
         menuAtlas.dispose();
         gameAtlas.dispose();
         utilAtlas.dispose();

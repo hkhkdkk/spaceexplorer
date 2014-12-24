@@ -1,30 +1,20 @@
 package com.tekmob.spaceexplorer.Screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.Controller.PreferenceController;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
-import java.util.ArrayList;
-
 /**
  * Created by Rahmat Rasyidi Hakim on 11/23/2014.
  */
+
 public class EncyclopediaScreen extends BaseScreen {
     private Table table;
     private Table container;

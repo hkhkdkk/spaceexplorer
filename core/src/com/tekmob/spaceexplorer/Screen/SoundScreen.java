@@ -1,6 +1,5 @@
 package com.tekmob.spaceexplorer.Screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,26 +7,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tekmob.spaceexplorer.Assets;
 import com.tekmob.spaceexplorer.SpaceExplorer;
 
-import java.util.Locale;
-
 /**
  * Created by Rahmat Rasyidi Hakim on 12/8/2014.
  */
+
 public class SoundScreen extends BaseScreen {
 
     private Table table;
     private Skin skin;
     private CheckBox soundEffectsCheckbox;
     private CheckBox musicCheckbox;
-    private Slider volumeSlider;
-    private Label volumeValue, labelSound, labelMusic, title;
+    private Label labelSound, labelMusic, title;
     private Image background, back;
 
     public SoundScreen(SpaceExplorer s) {
@@ -133,8 +129,12 @@ public class SoundScreen extends BaseScreen {
                 boolean enabled = musicCheckbox.isChecked();
                 spaceExplorer.getPreferences().setMusicEnabled(enabled);
 
-                Assets.menuMusic.setLooping(true);
-                Assets.menuMusic.play();
+                if(enabled){
+                    Assets.gameMusic.setLooping(true);
+                    Assets.gameMusic.play();
+                } else {
+                    Assets.gameMusic.stop();
+                }
             }
         } );
 
@@ -144,11 +144,6 @@ public class SoundScreen extends BaseScreen {
                 spaceExplorer.getScreenstack().pop();
             }
         });
-    }
-
-    private void updateVolumeLabel() {
-        float volume = ( spaceExplorer.getPreferences().getVolume() * 100 );
-        volumeValue.setText( String.format( Locale.US, "%1.0f%%", volume ) );
     }
 
     @Override
