@@ -142,6 +142,7 @@ public class SoundScreen extends BaseScreen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                 spaceExplorer.getScreenstack().pop();
             }
         });

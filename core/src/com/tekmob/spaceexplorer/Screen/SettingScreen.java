@@ -20,7 +20,7 @@ import com.tekmob.spaceexplorer.SpaceExplorer;
 public class SettingScreen extends BaseScreen {
 
     private Table table;
-    private Button how, sound, credit;
+    private Button how, sound, credit, about;
     private Label title;
     private Image backgorund;
     private Image back;
@@ -44,6 +44,7 @@ public class SettingScreen extends BaseScreen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                 spaceExplorer.getScreenstack().pop();
             }
         });
@@ -51,22 +52,33 @@ public class SettingScreen extends BaseScreen {
         how.addListener(new ClickListener() {
             @Override
 			public void clicked(InputEvent event, float x, float y) {
-              spaceExplorer.getScreenstack().push(new HelpScreen(spaceExplorer));
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
+                spaceExplorer.getScreenstack().push(new HelpScreen(spaceExplorer));
 			}
         });
 
         sound.addListener(new ClickListener() {
             @Override
 			public void clicked(InputEvent event, float x, float y) {
-              spaceExplorer.getScreenstack().push(new SoundScreen(spaceExplorer));
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
+                spaceExplorer.getScreenstack().push(new SoundScreen(spaceExplorer));
 			}
         });
 
         credit.addListener(new ClickListener() {
             @Override
 			public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                 spaceExplorer.getScreenstack().push(new CreditScreen(spaceExplorer));
 			}
+        });
+
+        about.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
+                spaceExplorer.getScreenstack().push(new AboutScreen(spaceExplorer));
+            }
         });
     }
 
@@ -85,6 +97,7 @@ public class SettingScreen extends BaseScreen {
         how = new ImageTextButton("HOW TO PLAY", h);
         sound = new ImageTextButton("SOUND", h);
         credit = new ImageTextButton("CREDITS", h);
+        about = new ImageTextButton("ABOUT", h);
 
         back = new Image(Assets.arrow);
 
@@ -97,9 +110,10 @@ public class SettingScreen extends BaseScreen {
         table.setFillParent(true);
         table.top();
         table.add(title).padBottom(50).padTop(20).expandX().row();
-        table.add(how).size(800,100).padBottom(20).row();
-        table.add(sound).size(800,100).padBottom(20).row();
-        table.add(credit).size(800,100).padBottom(40).row();
+        table.add(how).size(800, 75).padBottom(20).row();
+        table.add(sound).size(800,75).padBottom(20).row();
+        table.add(credit).size(800,75).padBottom(20).row();
+        table.add(about).size(800,75).padBottom(40).row();
         table.add(back).left();
     }
 }

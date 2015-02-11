@@ -52,6 +52,7 @@ public class EncyclopediaScreen extends BaseScreen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                 spaceExplorer.getScreenstack().pop();
             }
         });
@@ -60,80 +61,108 @@ public class EncyclopediaScreen extends BaseScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //cek dulu disini bisa gak dibuka?
-                if(spaceExplorer.getPrefController().getAchievementStatus("item0"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item0")){
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item1(spaceExplorer));
+                }
             }
         });
 
         item2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item1"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item1")) {
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item2(spaceExplorer));
+                }
             }
         });
 
         item3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item2"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item2")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item3(spaceExplorer));
+                }
             }
         });
 
         item4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item3"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item3")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item4(spaceExplorer));
+                }
             }
         });
 
         item5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item4"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item4")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item5(spaceExplorer));
+                }
             }
         });
 
         item6.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item5"))
-                spaceExplorer.getScreenstack().push(new Item6(spaceExplorer));
+                if(spaceExplorer.getPrefController().getAchievementStatus("item5")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
+                    spaceExplorer.getScreenstack().push(new Item6(spaceExplorer));
+                }
             }
         });
 
         item7.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item6"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item6")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item7(spaceExplorer));
+                }
             }
         });
 
         item8.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item7"))
-                spaceExplorer.getScreenstack().push(new Item8(spaceExplorer));
+                if(spaceExplorer.getPrefController().getAchievementStatus("item7")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
+                    spaceExplorer.getScreenstack().push(new Item8(spaceExplorer));
+                }
             }
         });
 
         item9.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item8"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item8")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item9(spaceExplorer));
+                }
             }
         });
 
         item10.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(spaceExplorer.getPrefController().getAchievementStatus("item9"))
+                if(spaceExplorer.getPrefController().getAchievementStatus("item9")) {
+
+                    if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                     spaceExplorer.getScreenstack().push(new Item10(spaceExplorer));
+                }
             }
         });
     }

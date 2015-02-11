@@ -33,10 +33,14 @@ public class Assets {
 
     public static Sound hitSound;
     public static Sound hitpuSound;
+    public static Sound click;
+    public static Sound explosion;
     public static Music gameMusic;
     public static Label label;
 
     public static String credit;
+    public static String about;
+
     public static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
     }
@@ -55,6 +59,10 @@ public class Assets {
         FileHandle fileCredit = Gdx.files.internal("credit.txt");
         credit = fileCredit.readString();
 
+        //file handle for credit
+        FileHandle fileAbout = Gdx.files.internal("about.txt");
+        about = fileAbout.readString();
+
         // fonts
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/nasalization.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -67,8 +75,10 @@ public class Assets {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/roboto.ttf"));
         parameter.size = 35;
         roboto = generator.generateFont(parameter);
-        parameter.size = 60;
+
+        parameter.size = 40;
         space = generator.generateFont(parameter);
+
         parameter.size = 35;
         spaceHow = generator.generateFont(parameter);
         generator.dispose();
@@ -80,6 +90,8 @@ public class Assets {
 
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sound/explode.wav"));
         hitpuSound = Gdx.audio.newSound(Gdx.files.internal("sound/pu.wav"));
+        click = Gdx.audio.newSound(Gdx.files.internal("sound/click.wav"));
+        explosion = Gdx.audio.newSound(Gdx.files.internal("sound/explosion.ogg"));
 
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/game.mp3"));
     }
@@ -108,6 +120,8 @@ public class Assets {
         // sound
         hitSound.dispose();
         hitpuSound.dispose();
+        click.dispose();
+        explosion.dispose();
         gameMusic.dispose();
 
         //Atlas dispose

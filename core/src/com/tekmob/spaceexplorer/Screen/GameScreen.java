@@ -149,12 +149,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void onBackScreen() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
-            addStat();
-
-            for (int i = 0; i < 10; i++) {
-                cekUnlockedPlanet(ObjectContainer.objects.get(i));
-            }
-
+            cekStatistik();
             if(onBack()) spaceExplorer.getScreenstack().pop();
         }
     }
@@ -167,11 +162,11 @@ public class GameScreen extends BaseScreen {
 
         if(!gameOver){
 
-            if(score >= 40){
+            if(score >= 60){
                 obstacleVelocity = 320; //320 <- Jangan Lupa Tukar lagi
             }
             else{
-                obstacleVelocity = 300;
+                obstacleVelocity = 280;
             }
 
             powerupVelocity = 220;
@@ -185,8 +180,8 @@ public class GameScreen extends BaseScreen {
                 Gdx.app.log("SESUDAH",score+"");
             }
 
-            if(temp >= 30){
-                miles += 1.0;
+            if(temp >= 15){
+                miles += 0.5;
                 temp = 0;
             }
             controlInput();
@@ -198,11 +193,7 @@ public class GameScreen extends BaseScreen {
 
             if(Gdx.input.justTouched()) {
                 gameOver = false;
-                addStat();
-
-                for (int i = 0; i < 10; i++) {
-                    cekUnlockedPlanet(ObjectContainer.objects.get(i));
-                }
+                cekStatistik();
                 resetWorld();
             }
         }
@@ -233,24 +224,6 @@ public class GameScreen extends BaseScreen {
                     activedShield = false;
                 }
             }
-
-            /*while (iterMissile.hasNext()){
-                Missile mis = iterMissile.next();
-                mis.position.y += powerupVelocity * deltaTime;
-
-                if(mis.position.y > spaceExplorer.HEIGHT){
-                    iterMissile.remove();
-                }
-
-                if(mis.getBounds().overlaps(o.getBounds())){
-                    iterMissile.remove();
-                    iterObstacle.remove();
-                }
-
-                if(mis == null){
-                    drawMissile = false;
-                }
-            }*/
         }
 
         while (iterPowerUpMissile.hasNext()){
@@ -292,7 +265,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void spawnEntity(){
-        if(TimeUtils.nanoTime() - lastObstacleSpawnTime > MathUtils.random(180000000,200000000)) spawnObstacle();
+        if(TimeUtils.nanoTime() - lastObstacleSpawnTime > MathUtils.random(190000000,210000000)) spawnObstacle();
 
         if(seconds >= 6) {
             spawnPUMissile();
@@ -302,11 +275,18 @@ public class GameScreen extends BaseScreen {
         if(activedMissile){
             obstacles.clear();
             if(spaceExplorer.getPrefController().isSoundEnabled())
-            Assets.hitSound.play(3f);
+            Assets.explosion.play();
             activedMissile = false;
         }
 
         if(TimeUtils.nanoTime() - lastShieldSpawnTime > MathUtils.random(1800000000,2000000000)) spawnPUShield();
+    }
+
+    private void cekStatistik(){
+        addStat();
+        for (int i = 0; i < 10; i++) {
+            cekUnlockedPlanet(ObjectContainer.objects.get(i));
+        }
     }
 
     private void drawWorld(){
@@ -362,7 +342,6 @@ public class GameScreen extends BaseScreen {
                 batch.begin();
                     Assets.roboto.draw(batch, spaceObject.getName(), spaceExplorer.WIDTH, spaceExplorer.HEIGHT/2+50);
                 batch.end();
-                Gdx.app.log("NOTIF","ITEM "+spaceObject.getName());
             }
         }
     }
@@ -398,8 +377,6 @@ public class GameScreen extends BaseScreen {
 
             spaceExplorer.getPrefController().putData(PreferenceController.STATISTIC, PreferenceController.MILESTONE, tempMile);
         }
-
-
     }
 
     private void controlInput(){
@@ -409,7 +386,7 @@ public class GameScreen extends BaseScreen {
         else if( adjustedX > 1.5f ) adjustedX = 1f;*/
 
         adjustedY = Gdx.input.getAccelerometerY()-2f;
-        if( adjustedY < -1f ) ship.position.x -= 2f + VELOCITY_PLANE;
+        if( adjustedY < -2f ) ship.position.x -= 2f + VELOCITY_PLANE;
         else if( adjustedY > 1f ) ship.position.x += 2f + VELOCITY_PLANE;
 
         /*
@@ -427,6 +404,7 @@ public class GameScreen extends BaseScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (countMissile != 0 && !activedMissile) {
+                    Assets.click.play();
                     countMissile--;
                     activedMissile = true;
                 }
@@ -437,6 +415,7 @@ public class GameScreen extends BaseScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(countShield != 0 && !activedShield) {
+                    Assets.click.play();
                     countShield--;
                     activedShield = true;
                 }

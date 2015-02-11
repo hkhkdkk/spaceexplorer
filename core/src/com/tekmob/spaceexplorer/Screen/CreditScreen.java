@@ -39,6 +39,7 @@ public class CreditScreen extends BaseScreen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                 spaceExplorer.getScreenstack().pop();
             }
         });
@@ -48,7 +49,7 @@ public class CreditScreen extends BaseScreen {
         Label.LabelStyle l = new Label.LabelStyle();
         l.font = Assets.nasa;
         l.fontColor = Color.WHITE;
-        title = new Label("CREDIT", l);
+        title = new Label("CREDITS", l);
 
         TextField.TextFieldStyle a = new TextField.TextFieldStyle();
         a.font = Assets.roboto;
@@ -58,7 +59,7 @@ public class CreditScreen extends BaseScreen {
         creditTextArea.setDisabled(true);
         creditTextArea.setScaleY(200);
         creditTextArea.setPrefRows(20);
-        creditTextArea.setSize(spaceExplorer.WIDTH-20,450);
+        creditTextArea.setSize(spaceExplorer.WIDTH-20,420);
 
         creditTextArea.layout();
 
@@ -72,7 +73,7 @@ public class CreditScreen extends BaseScreen {
         table.setFillParent(true);
         table.top();
         table.add(title).padBottom(50).padTop(20).expandX().row();
-        table.add(creditTextArea).size(spaceExplorer.WIDTH-20,450).expand().row();
+        table.add(creditTextArea).size(spaceExplorer.WIDTH-20,420).expand().row();
         table.add(back).left();
     }
 }

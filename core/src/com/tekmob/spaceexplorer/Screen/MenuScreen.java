@@ -61,6 +61,7 @@ public class MenuScreen extends BaseScreen {
     	playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
                 spaceExplorer.getScreenstack().push(new GameScreen(spaceExplorer));
             }
     	});
@@ -68,6 +69,7 @@ public class MenuScreen extends BaseScreen {
     	settingButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
             	spaceExplorer.getScreenstack().push(new SettingScreen(spaceExplorer));
 			}
         });
@@ -75,6 +77,7 @@ public class MenuScreen extends BaseScreen {
         highscoreButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
             	spaceExplorer.getScreenstack().push(new StatScreen(spaceExplorer));
 			}
        	});
@@ -82,6 +85,7 @@ public class MenuScreen extends BaseScreen {
         encyclopediaButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+                if(spaceExplorer.getPrefController().isSoundEnabled()) Assets.click.play();
             	spaceExplorer.getScreenstack().push(new EncyclopediaScreen(spaceExplorer));
 			}
        	});
